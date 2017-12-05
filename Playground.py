@@ -12,7 +12,7 @@ def setup():
     background(BACKGROUND)
     print(i.step)
 
-    if 1 < 1.0:
+    if 0 > 1.0 or 1 < 1.1:
         print("what")
 
 

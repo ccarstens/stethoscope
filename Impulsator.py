@@ -9,13 +9,15 @@ class Impulsator:
     ceiling = 1
     step = 0
 
+    storage = None
+
     def __init__(self, steps):
-        self.step = (self.ceiling - self.floor) / steps
+        self.step = self.getSteps(steps)
 
     def calculate(self):
         newValue = self.calculateNewValue()
         # self.log("BEFORE IF")
-        if self.floor > newValue or self.ceiling < int(newValue):
+        if self.floor > newValue or self.ceiling < newValue:
             self.log("OUT (" + str(newValue) + ")")
             self.direction *= -1
             newValue = self.calculateNewValue()
@@ -34,5 +36,6 @@ class Impulsator:
     def log(self, location = ""):
         print(location + "\nValue: " + str(self.value) + "\nDirection: " + str(self.direction) + "\nStep: " + str(self.step) + "\n\n")
 
-
+    def getSteps(self, steps):
+        return (self.ceiling - self.floor) / steps
 
