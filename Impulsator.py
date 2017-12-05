@@ -1,5 +1,5 @@
 from __future__ import division
-import numpy as np
+# import numpy as np
 
 
 
@@ -14,8 +14,8 @@ class Impulsator:
 
     def __init__(self, steps):
         self.step = self.getSteps(steps)
-        r = np.arange(0.0, 1.0, 0.1)
-        print(r)
+        # r = np.arange(0.0, 1.0, 0.1)
+        # print(r)
 
     def calculate(self):
         newValue = self.calculateNewValue()

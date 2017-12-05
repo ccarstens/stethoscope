@@ -1,6 +1,7 @@
 from Agent import Agent
 from Impulsator import Impulsator
 
+
 BACKGROUND = color(0)
 
 x = Agent()
