@@ -1,4 +1,5 @@
 from __future__ import division
+import numpy as np
 
 
 
@@ -13,6 +14,8 @@ class Impulsator:
 
     def __init__(self, steps):
         self.step = self.getSteps(steps)
+        r = np.arange(0.0, 1.0, 0.1)
+        print(r)
 
     def calculate(self):
         newValue = self.calculateNewValue()
@@ -21,7 +24,8 @@ class Impulsator:
             self.log("OUT (" + str(newValue) + ")")
             self.direction *= -1
             newValue = self.calculateNewValue()
-        
+        else:
+            self.log("WHY")
 
         self.value = newValue
 
