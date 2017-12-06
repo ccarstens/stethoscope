@@ -25,6 +25,10 @@ float sum;
 float oldValue;
 float newValue;
 
+boolean LOG = true;
+
+int x;
+
 void setup(){
     
 
@@ -64,26 +68,30 @@ void draw(){
         //TESTING
 
         if(DRAW){
-            fill(def.PRIM);
-            background(0);
+            fill(255);
+            // background(0);
             stroke(255);
 
             // println("S");
             // println(stethoscope.in.bufferSize());
             for(int i = 0; i < stethoscope.in.bufferSize() - 1; i++){
-                println("this: " + stethoscope.in.left.get(i));
-                sum += stethoscope.in.left.get(i);
+                float curr = stethoscope.in.left.get(i);
+                if(curr > 0) curr *= -1;
+                sum += curr;
 
                 // line( i, 500 + stethoscope.in.left.get(i)*1000, i+1, 500 + stethoscope.in.left.get(i+1)*1000 );
             
             }
-            println("sum" + sum);
-            println("");
+            log("sum" + sum);
+            log("");
             newValue = sum /stethoscope.in.bufferSize();
-            println("new value: " + newValue);
-            ellipse(width / 2, 500 + newValue * 100000, 2, 2);
-            println(sum / stethoscope.in.bufferSize());
+            newValue = 500 + newValue * 1000;
+            log("new value: " + newValue);
+
+            ellipse(x, newValue, 2, 2);
+            log(sum / stethoscope.in.bufferSize());
             sum = 0;
+            x++;
 
         }
 
@@ -122,6 +130,11 @@ void mouseReleased(){
 }
 
 
+void log(String message){
+    if(LOG){
+        println(message);
+    }
+}
 
 
 

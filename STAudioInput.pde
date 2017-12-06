@@ -29,7 +29,7 @@ class STAudioInput extends SettingsReceiver{
 
                 minim.setInputMixer(mixer);
 
-                this.in = minim.getLineIn(Minim.STEREO);
+                this.in = minim.getLineIn(Minim.STEREO, 1700);
             }
         }
     }

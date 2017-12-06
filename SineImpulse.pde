@@ -33,7 +33,7 @@ class SineImpulse extends SettingsReceiver{
         // }
         this.x = newX;
 
-        this.log();
+        // this.log();
 
 
         this.currentStep++;
