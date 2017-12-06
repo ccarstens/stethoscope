@@ -78,7 +78,7 @@ void draw(){
             // println(stethoscope.in.bufferSize());
             for(int i = 0; i < stethoscope.in.bufferSize() - 1; i++){
                 float curr = stethoscope.in.left.get(i);
-                if(curr > 0) curr *= -1;
+                // if(curr > 0) curr *= -1;
                 sum += curr;
 
                 // line( i, 500 + stethoscope.in.left.get(i)*1000, i+1, 500 + stethoscope.in.left.get(i+1)*1000 );
@@ -87,7 +87,7 @@ void draw(){
             log("sum" + sum);
             log("");
             newValue = sum /stethoscope.in.bufferSize();
-            newValue = 500 + newValue * 1000;
+            newValue = 500 + newValue * 2000;
             log("new value: " + newValue);
 
             line(x - xStep, oldValue, x, newValue);
