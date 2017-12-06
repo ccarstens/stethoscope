@@ -5,7 +5,8 @@ import java.math.BigDecimal;
 import java.util.*;
 
 Settings def = new Settings();
-Impulsator impulse;
+
+SinePlotter sp;
 
 int multiplicator = 1;
 
@@ -17,9 +18,10 @@ void setup(){
     frameRate(def.FRAMERATE);
 
 
-    size(1000, 1000);
+    size(1500, 1000);
     background(def.BACKGROUND);
-    impulse = new Impulsator(def, 0, 1, 1000, 20);
+    sp = new SinePlotter(def, width, 1);
+    sp.setOffsets(0, height / 2);
     
 
 }
@@ -27,21 +29,7 @@ void setup(){
 void draw(){
     clear();
 
-    for(int x = 0; x < width; x++){
-
-        // float t = (int)((float)x / (float)width * PI * 30);
-        // println(t);
-        float y =  sin(((float)x / (float)width * multiplicator * PI * 2)) * mouseY;
-        // println(y);
-        stroke(def.PRIM);
-        fill(def.PRIM);
-        
-        int xValue = x + 0;
-        int yValue = (int)y + width / 2;
-        ellipse(xValue, yValue, 2, 2);
-        
-    }
-
+    sp.plot();
 
 
     // clear();
@@ -67,4 +55,8 @@ void mouseClicked(){
     // impulse.direction *= -1;
     multiplicator += 1;
     println(multiplicator);
+}
+
+void mouseMoved(){
+    sp.amplifier = mouseY - 100;
 }

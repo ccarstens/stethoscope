@@ -1,11 +1,13 @@
 
 
-class Impulsator extends SettingsReceiver{
+// class Impulsator extends SettingsReceiver{
 
     
     
 
-    
 
 
-}
+
+
+
+// }
