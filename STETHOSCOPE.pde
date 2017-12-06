@@ -25,19 +25,28 @@ void setup(){
 }
 
 void draw(){
+
+
+
+    int y =  (int) ((x * x) * 0.001) + width/2;
+
+
+    stroke(def.PRIM);
+    fill(def.PRIM);
+    ellipse(x, y, 2, 2);
+    x++;
+
     // clear();
-    for(int i = 0; i < 4; i++){
-        BigDecimal h = new BigDecimal(height);
-        // int y = impulse.readSine(100, 200);
-        int y = (int) ((sin(x) * 30) + 200);
-        println(y);
-        fill(def.PRIM);
-        ellipse(x, y, 5, 5);
-        x++;
-        if(x > width){
-            x = 0;
-        }
-    }
+    // // for(int i = 0; i < width; i++){
+
+    //     float y = sin(x) * 100 + 100;
+
+    //     fill(def.PRIM);
+    //     ellipse(x, (int)y, 1, 1);
+    //     println(y);
+    //     x++;
+
+    // // }
 
 }
 
