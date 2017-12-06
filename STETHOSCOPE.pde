@@ -20,7 +20,10 @@ STAudioInput stethoscope;
 
 BeatDetect beat;
 
-
+boolean DRAW = false;
+float sum;
+float oldValue;
+float newValue;
 
 void setup(){
     
@@ -44,18 +47,53 @@ void setup(){
 }
 
 void draw(){
-    // clear();
+    if(!def.TESTING){
+        // clear();
 
-    
-    // sp.amplifier = (int)si.read();
+        
+        // sp.amplifier = (int)si.read();
 
-    
-    background(0);
-    beat.detect(stethoscope.in.mix);
-    if ( beat.isOnset() ) sp.amplifier = 500;
-    sp.amplifier *= 0.9;
+        
+        background(0);
+        beat.detect(stethoscope.in.mix);
+        if ( beat.isOnset() ) sp.amplifier = 500;
+        sp.amplifier *= 0.9;
 
-    sp.plot();
+        sp.plot();
+    }else{
+        //TESTING
+
+        if(DRAW){
+            fill(def.PRIM);
+            background(0);
+            stroke(255);
+
+            // println("S");
+            // println(stethoscope.in.bufferSize());
+            for(int i = 0; i < stethoscope.in.bufferSize() - 1; i++){
+                println("this: " + stethoscope.in.left.get(i));
+                sum += stethoscope.in.left.get(i);
+
+                // line( i, 500 + stethoscope.in.left.get(i)*1000, i+1, 500 + stethoscope.in.left.get(i+1)*1000 );
+            
+            }
+            println("sum" + sum);
+            println("");
+            newValue = sum /stethoscope.in.bufferSize();
+            println("new value: " + newValue);
+            ellipse(width / 2, 500 + newValue * 100000, 2, 2);
+            println(sum / stethoscope.in.bufferSize());
+            sum = 0;
+
+        }
+
+
+
+
+
+
+    }
+
 }
 
 
@@ -75,7 +113,13 @@ void mouseMoved(){
 }
 
 
+void mousePressed(){
+    DRAW = true;
+}
 
+void mouseReleased(){
+    DRAW = false;
+}
 
 
 

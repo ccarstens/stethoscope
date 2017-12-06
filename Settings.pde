@@ -5,4 +5,6 @@ class Settings{
     public boolean LOG = false;
 
     public int PRIM = color(255, 0, 0);
+
+    public boolean TESTING = true;
 }
