@@ -4,13 +4,13 @@ class SinePlotter extends SettingsReceiver{
     public int x;
     public int y;
     public int amplifier;
-    public int waveCount;
+    public int waveCount = 1;
 
     public int offsetX;
     public int offsetY;
 
 
-    public SinePlotter(Settings def, int graphWidth, int waveCount){
+    public SinePlotter(Settings def, int graphWidth){
         super(def);
         this.graphWidth = graphWidth;
         this.waveCount = waveCount;
@@ -18,7 +18,7 @@ class SinePlotter extends SettingsReceiver{
 
     public void plot(){
         for(this.x = 0; this.x < this.graphWidth; this.x++){
-            this.y = (int)(sin((float)this.x / (float)this.graphWidth * this.waveCount * PI * 2) * this.amplifier);
+            this.y = (int)(sin((float)this.x / (float)this.graphWidth * this.waveCount * PI * 1) * this.amplifier);
 
             stroke(def.PRIM);
             fill(def.PRIM);

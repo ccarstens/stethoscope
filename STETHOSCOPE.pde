@@ -7,8 +7,8 @@ import java.util.*;
 Settings def = new Settings();
 
 SinePlotter sp;
+SineImpulse si;
 
-int multiplicator = 1;
 
 void setup(){
     //Setting Defaults
@@ -20,8 +20,10 @@ void setup(){
 
     size(1500, 1000);
     background(def.BACKGROUND);
-    sp = new SinePlotter(def, width, 1);
+    sp = new SinePlotter(def, width);
     sp.setOffsets(0, height / 2);
+
+    si = new SineImpulse(def, 5, 100);
     
 
 }
@@ -30,20 +32,7 @@ void draw(){
     clear();
 
     sp.plot();
-
-
-    // clear();
-    
-
-    //     float y = sin(x) * 100 + 100;
-
-    //     fill(def.PRIM);
-    //     ellipse(x, (int)y, 1, 1);
-    //     println(y);
-    //     x++;
-
-    
-
+    sp.amplifier = (int)si.read();
 }
 
 
@@ -53,10 +42,12 @@ void clear(){
 
 void mouseClicked(){
     // impulse.direction *= -1;
-    multiplicator += 1;
-    println(multiplicator);
+    sp.waveCount++;
 }
 
 void mouseMoved(){
-    sp.amplifier = mouseY - 100;
+    si.amplifier = mouseY;
+    si.resolution = (int)((float)mouseX / (float)width * 100);
+
+    println(si.resolution);
 }
