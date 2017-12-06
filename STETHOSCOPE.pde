@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.*;
 
 import ddf.minim.*;
+import ddf.minim.analysis.*;
 import javax.sound.sampled.*;
 
 
@@ -16,6 +17,8 @@ SineImpulse si;
 
 Minim globalMinim;
 STAudioInput stethoscope;
+
+BeatDetect beat;
 
 
 
@@ -33,16 +36,26 @@ void setup(){
     globalMinim = new Minim(this);
     stethoscope = new STAudioInput(def, globalMinim, "Soundflower (2ch)");
 
+    beat = new BeatDetect();
+
 
     
 
 }
 
 void draw(){
-    clear();
+    // clear();
+
+    
+    // sp.amplifier = (int)si.read();
+
+    
+    background(0);
+    beat.detect(stethoscope.in.mix);
+    if ( beat.isOnset() ) sp.amplifier = 500;
+    sp.amplifier *= 0.9;
 
     sp.plot();
-    sp.amplifier = (int)si.read();
 }
 
 
@@ -59,5 +72,12 @@ void mouseMoved(){
     si.amplifier = mouseY;
     si.resolution = (int)((float)mouseX / (float)width * 300);
 
-    println(si.resolution);
 }
+
+
+
+
+
+
+
+
