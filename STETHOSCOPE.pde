@@ -25,9 +25,11 @@ float sum;
 float oldValue;
 float newValue;
 
-boolean LOG = true;
+boolean LOG = false;
 
 int x;
+
+int xStep = 5;
 
 void setup(){
     
@@ -88,10 +90,16 @@ void draw(){
             newValue = 500 + newValue * 1000;
             log("new value: " + newValue);
 
-            ellipse(x, newValue, 2, 2);
+            line(x - xStep, oldValue, x, newValue);
+            // ellipse(x, newValue, 2, 2);
             log(sum / stethoscope.in.bufferSize());
+            oldValue = newValue;
             sum = 0;
-            x++;
+            x += xStep;
+            if(x > width){
+                clear();
+                x = 0;
+            }
 
         }
 
