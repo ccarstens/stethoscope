@@ -7,7 +7,7 @@ import java.util.*;
 Settings def = new Settings();
 Impulsator impulse;
 
-
+int multiplicator = 1;
 
 void setup(){
     //Setting Defaults
@@ -27,14 +27,17 @@ void setup(){
 void draw(){
     clear();
 
-    for(int x = 0; x < width - 100; x++){
+    for(int x = 0; x < width; x++){
 
-        int y =  (int) ((x * x) * 0.001);
+        // float t = (int)((float)x / (float)width * PI * 30);
+        // println(t);
+        float y =  sin(((float)x / (float)width * multiplicator * PI * 2)) * mouseY;
+        // println(y);
         stroke(def.PRIM);
         fill(def.PRIM);
         
-        int xValue = x + mouseX;
-        int yValue = y + mouseY;
+        int xValue = x + 0;
+        int yValue = (int)y + width / 2;
         ellipse(xValue, yValue, 2, 2);
         
     }
@@ -61,5 +64,7 @@ void clear(){
 }
 
 void mouseClicked(){
-    impulse.direction *= -1;
+    // impulse.direction *= -1;
+    multiplicator += 1;
+    println(multiplicator);
 }
