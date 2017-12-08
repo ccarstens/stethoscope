@@ -11,10 +11,10 @@ class STAudioInput extends SettingsReceiver{
         this.minim = minim;
         this.mixerInfo = AudioSystem.getMixerInfo();
         this.inputName = inputName;
-        this.selectAudioInputByName(this.inputName);
+        this.selectAudioInputByName(this.inputName, def.STANDARDBUFFERSIZE);
     }
 
-    public void selectAudioInputByName(String name){
+    public void selectAudioInputByName(String name, int bufferSize){
         for(int i = 0; i < this.mixerInfo.length; i++){
             String currName = this.mixerInfo[i].getName();
             // println(currName);
@@ -29,9 +29,25 @@ class STAudioInput extends SettingsReceiver{
 
                 minim.setInputMixer(mixer);
 
-                this.in = minim.getLineIn(Minim.STEREO, 1700);
+                this.in = minim.getLineIn(Minim.STEREO, bufferSize);
             }
         }
+    }
+
+    public AudioBuffer getBuffer(){
+        return this.in.mix;
+    }
+
+    public int getBufferSize(){
+        return this.in.bufferSize();
+    }
+
+    public float getSample(int i){
+        return this.in.mix.get(i);
+    }
+
+    public void getBufferPartial(){
+        
     }
 
 }
