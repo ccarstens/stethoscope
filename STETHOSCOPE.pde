@@ -55,65 +55,11 @@ void setup(){
 }
 
 void draw(){
-    // if(!def.TESTING){
-    //     // clear();
 
-        
-    //     // sp.amplifier = (int)si.read();
-        
-    //     background(0);
-    //     beat.detect(stethoscope.in.mix);
-    //     if ( beat.isOnset() ) sp.amplifier = 500;
-    //     sp.amplifier *= 0.9;
-
-    //     sp.plot();
-    // }else{
-    //     //TESTING
-
-    //     if(DRAW){
-    //         fill(255);
-    //         // background(0);
-    //         stroke(255);
-
-    //         // println("S");
-    //         // println(stethoscope.in.bufferSize());
-    //         //the buffer size is set to sample rate by frame rate, so that all the samples that will be played during one frame are in the buffer at the same time
-    //         //then all the sample values are being added up and devided by the bufferSize, resulting in the average sample value
-    //         // all negative sample values are being multiplied with -1 so they turn positive and added
-    //         // the resulting average sample of one frame is then used to calculate the y value for the graphs points
-    //         for(int i = 0; i < stethoscope.in.bufferSize() - 1; i++){
-    //             float curr = stethoscope.in.left.get(i);
-    //             if(curr > 0) curr *= -1;
-    //             sum += curr;
-
-    //             // line( i, 500 + stethoscope.in.left.get(i)*1000, i+1, 500 + stethoscope.in.left.get(i+1)*1000 );
-            
-    //         }
-    //         log("sum" + sum);
-    //         log("");
-    //         newValue = sum /stethoscope.in.bufferSize();
-    //         newValue = 500 + newValue * 1000;
-    //         log("new value: " + newValue);
-
-    //         line(x - xStep, oldValue, x, newValue);
-    //         // ellipse(x, newValue, 2, 2);
-    //         log(sum / stethoscope.in.bufferSize());
-    //         oldValue = newValue;
-    //         sum = 0;
-    //         x += xStep;
-    //         if(x > width){
-    //             clear();
-    //             x = 0;
-    //         }
-
-    //     }
-
-
-
-
-
-
-    // }
+    if(DRAW){
+        stethoscopeController.calculateBufferPartialAverage(100);
+    }
+    
 
 }
 

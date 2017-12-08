@@ -7,7 +7,19 @@ class STAudioInputController extends SettingsReceiver{
 
         this.stethoscope = new STAudioInput(def, def.GLOBALMINIM, def.AUDIOINPUTCHANNEL);
 
-        this.stethoscope.getBufferPartial(1, 1);
+        
+
+    }
+
+
+    public void calculateBufferPartialAverage(int resolution){
+
+
+        for(int i = 0; i < resolution; i++){
+            float[] bufferPartial = this.stethoscope.getBufferPartial(i, resolution);
+            println("start" + i);
+            println(bufferPartial);
+        }
 
     }
 
