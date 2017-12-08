@@ -34,8 +34,8 @@ class STAudioInput extends SettingsReceiver{
         }
     }
 
-    public AudioBuffer getBuffer(){
-        return this.in.mix;
+    public float[] getBuffer(){
+        return this.in.mix.toArray();
     }
 
     public int getBufferSize(){
@@ -46,8 +46,18 @@ class STAudioInput extends SettingsReceiver{
         return this.in.mix.get(i);
     }
 
-    public void getBufferPartial(){
+    public float[] getBufferPartial(int partial, int of){
+        float[] buffer = this.getBuffer();
+
+        int bufferSize = this.getBufferSize();
+        int partialSize = bufferSize / of;
+
+        int startIndex = partialSize * partial;
+        int endIndex = startIndex + partialSize;
+
+        float[] partialArray = Arrays.copyOfRange(buffer, startIndex, endIndex);
         
+        return partialArray;
     }
 
 }

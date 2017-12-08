@@ -7,11 +7,11 @@ class STAudioInputController extends SettingsReceiver{
 
         this.stethoscope = new STAudioInput(def, def.GLOBALMINIM, def.AUDIOINPUTCHANNEL);
 
-        
+        this.stethoscope.getBufferPartial(1, 1);
 
     }
 
 
-    
+
 
 }

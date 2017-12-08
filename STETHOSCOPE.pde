@@ -136,6 +136,7 @@ void mouseMoved(){
 
 void mousePressed(){
     DRAW = true;
+    stethoscopeController.stethoscope.getBufferPartial(0, 10);
 }
 
 void mouseReleased(){
