@@ -12,15 +12,25 @@ class STAudioInputController extends SettingsReceiver{
     }
 
 
-    public void calculateBufferPartialAverage(int resolution){
+    public float[] getSampleAverages(int resolution){
 
+        float[] partialAverages = new float[resolution];
 
         for(int i = 0; i < resolution; i++){
             float[] bufferPartial = this.stethoscope.getBufferPartial(i, resolution);
-            println("start" + i);
-            println(bufferPartial);
+            partialAverages[i] = this.getBufferPartialAverage(bufferPartial);
         }
+        return partialAverages;
 
+    }
+
+    public float getBufferPartialAverage(float[] bufferPartial){
+        float tmp = 0.0;
+        for(float sample: bufferPartial){
+            if(sample < 0) sample *= -1;
+            tmp += sample;
+        }
+        return tmp / bufferPartial.length;
     }
 
 

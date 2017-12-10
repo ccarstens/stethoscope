@@ -32,6 +32,11 @@ int xStep = 5;
 
 STAudioInputController stethoscopeController;
 
+float min = 1;
+float max = 0;
+int res = 1;
+String notes = "Stethoscope attached, Heartbeat";
+
 void setup(){
     
 
@@ -56,8 +61,16 @@ void setup(){
 
 void draw(){
 
-    if(DRAW){
-        stethoscopeController.calculateBufferPartialAverage(100);
+    if(!DRAW){
+        float[] averages = stethoscopeController.getSampleAverages(res);
+        for(float av: averages){
+            
+            if(av < min) min = av;
+            if(av > max) max = av;
+            
+            
+        }
+
     }
     
 
@@ -71,6 +84,15 @@ void clear(){
 void mouseClicked(){
     // impulse.direction *= -1;
     sp.waveCount++;
+    println(notes);
+    println("Resolution: " + res);
+    println("Max: " + max);
+    println("Min: " + min);
+    println("\n");
+    res *= 2;
+    min = 1;
+    max = 0;
+
 }
 
 void mouseMoved(){
