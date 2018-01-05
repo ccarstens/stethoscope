@@ -69,7 +69,7 @@ void draw(){
     }else{
         //TESTING
 
-        if(DRAW){
+        // if(DRAW){
             fill(255);
             // background(0);
             stroke(255);
@@ -91,7 +91,7 @@ void draw(){
             log("sum" + sum);
             log("");
             newValue = sum /stethoscope.in.bufferSize();
-            newValue = 500 + newValue * 1000;
+            newValue = 700 + newValue * 1000;
             log("new value: " + newValue);
 
             line(x - xStep, oldValue, x, newValue);
@@ -105,7 +105,7 @@ void draw(){
                 x = 0;
             }
 
-        }
+        // }
 
 
 
