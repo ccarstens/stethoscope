@@ -59,7 +59,9 @@ void draw(){
         // if(av < min) min = av;
         // if(av > max) max = av;
         fill(255);
-        ellipse(xStep, av * 700, 2, 2);
+        noStroke();
+        float y = 800 + (av * 700 * -1);
+        ellipse(xStep, y, 2, 2);
         xStep++;
         
         
