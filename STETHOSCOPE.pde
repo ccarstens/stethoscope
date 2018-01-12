@@ -55,9 +55,12 @@ void draw(){
     
     float[] averages = stethoscopeController.getSampleAverages(res);
     for(float av: averages){
-        println(av);
-        if(av < min) min = av;
-        if(av > max) max = av;
+        // println(av);
+        // if(av < min) min = av;
+        // if(av > max) max = av;
+        fill(255);
+        ellipse(xStep, av * 700, 2, 2);
+        xStep++;
         
         
     }
