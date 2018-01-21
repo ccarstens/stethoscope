@@ -45,15 +45,15 @@ void setup(){
     //  0              //up z
     //  );
     
-
+    println((height/2.0) / tan(PI*30.0 / 180.0));
 }
 
 void draw(){
 
     camera(
-     map(mouseY, 0, height, -500, height * 2),     //eye x
-     map(mouseY, 0, height, -500, height * 2),    //eye y
-     (height/2.0) / tan(PI*30.0 / 180.0),   //eyez
+     width / 4,     //eye x
+     height / 4,    //eye y
+     map(mouseX, 0, width, -500, 3000),   //eyez
      width/2.0,     //center x
      height/2.0,    //center y
      0,             //center z
@@ -65,6 +65,10 @@ void draw(){
     
     
 
+}
+
+void mousePressed(){
+    println("eye z " + map(mouseX, 0, width, -500, 3000));
 }
 
 

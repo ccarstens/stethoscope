@@ -50,9 +50,10 @@ class Caleidoscope extends SettingsReceiver {
 
         
 
-        int x = mouseX - (width / 2);
-        // int y = (int) map(mouseY, height / 2, 0, 0, height / 2);
-        int y = 250;
+        // int x = mouseX - (width / 2);
+        int x = 0;
+        int y = (int) map(mouseY, height / 2, 0, 0, height / 2);
+        // int y = 250;
 
         // int z = (int) map(mouseY, height / 2, 0, 0, height / 2);
         int z = 250;
