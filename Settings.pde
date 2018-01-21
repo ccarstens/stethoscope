@@ -4,7 +4,7 @@ class Settings{
 
     public PApplet instance;
 
-    public int BACKGROUND = color(0);
+    public int BACKGROUND = color(255, 255, 255);
     public int DECIMALS = 10;
     public int FRAMERATE = 35;
     public boolean LOG = false;
