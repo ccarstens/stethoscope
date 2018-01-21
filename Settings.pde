@@ -19,7 +19,7 @@ class Settings{
 
     public int STANDARDBUFFERSIZE = 1700;
 
-    public boolean SHOWLINES = false;
+    public boolean SHOWLINES = true;
 
     Settings(PApplet instance){
         this.instance = instance;

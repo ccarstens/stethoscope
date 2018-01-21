@@ -14,7 +14,7 @@ void setup(){
     
 
     frameRate(def.FRAMERATE);
-    size(1000, 1000);
+    size(1000, 1000, P3D);
     background(def.BACKGROUND);
     cali = new Caleidoscope(def);
     
