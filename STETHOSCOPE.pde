@@ -17,6 +17,8 @@ void setup(){
     size(1000, 1000, P3D);
     background(def.BACKGROUND);
     cali = new Caleidoscope(def);
+
+    hint(ENABLE_DEPTH_SORT);
     
 
 }
