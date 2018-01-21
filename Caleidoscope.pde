@@ -9,6 +9,8 @@ class Caleidoscope extends SettingsReceiver {
 
     int y3dCurrent = 0;
 
+    int currentQuadrant;
+
     Caleidoscope(Settings def){
         super(def);
     }
@@ -17,6 +19,8 @@ class Caleidoscope extends SettingsReceiver {
     public void magic(){
         background(this.def.BACKGROUND);
         pushMatrix();
+        translate(width/2, height/2);
+        rotate(radians(-225));
         this.runQuadrant(0);
         this.runQuadrant(1);
         this.runQuadrant(2);
@@ -31,15 +35,26 @@ class Caleidoscope extends SettingsReceiver {
 
 
     public void _draw(){
-        
+        PImage img = loadImage("pill1.png");
         // this.xy(mouseX, mouseY);
         stroke(this.def.PRIM);
         fill(this.def.PRIM);
-        this.y3d(mouseY);
-        pushMatrix();
-        translate(this.x, this.y);
-        ellipse(0, 0, 50, 50);
 
+        pushMatrix();
+        this.y3d(mouseY);
+        translate(this.x, this.y);
+
+        pushMatrix();
+
+        rotate(radians(135));
+        translate(0, img.height / 2 * -1);
+        imageMode(CENTER);
+
+        ellipse(0, 0, 4, 4);
+        
+        image(img, 0, 0);
+
+        popMatrix();
         popMatrix();
 
         if(this.def.SHOWLINES){
@@ -49,15 +64,9 @@ class Caleidoscope extends SettingsReceiver {
         
     }
 
-    public void xyz(int xValue, int yValue){
-        if(this.mirror){
-            this.x = yValue;
-            this.y = xValue;
-        }else{
-            this.x = xValue;
-            this.y = yValue;
-        }
-    }
+    // public int[] xyz(int xValue, int yValue){
+
+    // }
 
 
     public void y3d(int yValue){
@@ -66,10 +75,11 @@ class Caleidoscope extends SettingsReceiver {
     }
 
     public void runQuadrant(int quadrant){
+        this.currentQuadrant = quadrant;
         switch (quadrant) {
             case 0:{
-                translate(width/2, height/2);
-                rotate(radians(-135));
+                
+                rotate(radians(90));
                 
                 break;
             }
