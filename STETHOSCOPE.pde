@@ -50,7 +50,17 @@ void setup(){
 
 void draw(){
 
-    
+    camera(
+     map(mouseY, 0, height, -500, height * 2),     //eye x
+     map(mouseY, 0, height, -500, height * 2),    //eye y
+     (height/2.0) / tan(PI*30.0 / 180.0),   //eyez
+     width/2.0,     //center x
+     height/2.0,    //center y
+     0,             //center z
+     0,             //up x
+     1,             //up y
+     0              //up z
+     );
     cali.magic();
     
     

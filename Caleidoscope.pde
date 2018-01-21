@@ -20,12 +20,12 @@ class Caleidoscope extends SettingsReceiver {
     public void magic(){
         background(this.def.BACKGROUND);
         pushMatrix();
-        translate(width/2, height/2);
-        rotate(radians(-225));
+        // translate(width/2, height/2);
+        // rotate(radians(-225));
         this.runQuadrant(0);
-        this.runQuadrant(1);
-        this.runQuadrant(2);
-        this.runQuadrant(3);
+        // this.runQuadrant(1);
+        // this.runQuadrant(2);
+        // this.runQuadrant(3);
 
 
 
@@ -36,6 +36,11 @@ class Caleidoscope extends SettingsReceiver {
 
 
     public void _draw(){
+        if(this.def.SHOWLINES){
+            stroke(this.def.PRIM);
+            line(0, 0, 0, 1000);
+            line(0, 0, 1000, 0);    
+        }
         PImage img = loadImage("pill1.png");
         // this.xy(mouseX, mouseY);
         stroke(this.def.PRIM);
@@ -47,21 +52,20 @@ class Caleidoscope extends SettingsReceiver {
 
         int x = mouseX - (width / 2);
         // int y = (int) map(mouseY, height / 2, 0, 0, height / 2);
-        int y = 200;
+        int y = 250;
 
-        int z = (int) map(mouseY, height / 2, 0, 0, height / 2);
+        // int z = (int) map(mouseY, height / 2, 0, 0, height / 2);
+        int z = 250;
 
         this.xyz(x, y, z);
+        
         translate(this.pos1.x, this.pos1.y, this.pos1.z);
+
         this.drawImage(img);
         
         popMatrix();
 
-        if(this.def.SHOWLINES){
-            stroke(this.def.PRIM);
-            line(0, 0, 0, 1000);
-            line(0, 0, 1000, 0);    
-        }
+
         
     }
 
@@ -126,11 +130,12 @@ class Caleidoscope extends SettingsReceiver {
 
     public void runQuadrant(int quadrant){
         this.currentQuadrant = quadrant;
-        rotate(radians(90));
+        // rotate(radians(90));
         this._draw();
     }
 
     public void drawImage(PImage image){
+
         if(!this.offBounds){
             pushMatrix(); //rotation and scaling for image size and orientation
             scale(0.5);
