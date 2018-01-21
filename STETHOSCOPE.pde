@@ -1,12 +1,8 @@
-import processing.core.*;
 
+// import java.math.BigDecimal;
 // import java.io.*;
-import java.math.BigDecimal;
-import java.util.*;
+// import processing.core.*;
 
-import ddf.minim.*;
-import ddf.minim.analysis.*;
-import javax.sound.sampled.*;
 
 
 
@@ -18,15 +14,17 @@ STAudioInputController stethoscopeController;
 
 boolean LOG = false;
 
-int x;
+int x = 0;
 
-int xStep = 5;
+int xStep = 2;
 
 
 
 float min = 1;
 float max = 0;
-int res = 1;
+int res = 2;
+
+float lastY = 0;
 
 void setup(){
     
@@ -53,16 +51,20 @@ void setup(){
 void draw(){
 
     
-    float[] averages = stethoscopeController.getSampleAverages(res);
-    for(float av: averages){
+    float[] mappedAverages = stethoscopeController.getAudioMappedTo(800, res);
+    for(float av: mappedAverages){
         // println(av);
         // if(av < min) min = av;
         // if(av > max) max = av;
-        fill(255);
+        
+        stroke(255);
+        strokeWeight(2);
+        line(x - xStep, lastY, x, av);
+        fill(255, 0, 0);
         noStroke();
-        float y = 800 + (av * 700 * -1);
-        ellipse(xStep, y, 2, 2);
-        xStep++;
+        ellipse(x, av, 6, 6);
+        lastY = av;
+        x += xStep;
         
         
     }

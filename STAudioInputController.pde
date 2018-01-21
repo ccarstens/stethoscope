@@ -1,3 +1,9 @@
+import java.util.*;
+import ddf.minim.*;
+import ddf.minim.analysis.*;
+import javax.sound.sampled.*;
+
+
 class STAudioInputController extends SettingsReceiver{
     public STAudioInput stethoscope;
 
@@ -31,6 +37,15 @@ class STAudioInputController extends SettingsReceiver{
             tmp += sample;
         }
         return tmp / bufferPartial.length;
+    }
+
+    public float[] getAudioMappedTo(float max, int resolution){
+        float[] sampleAverages = this.getSampleAverages(resolution);
+        float[] mapped = new float[sampleAverages.length];
+        for(int i = 0; i < sampleAverages.length; i++){
+            mapped[i] = 800 + (sampleAverages[i] * max * -1);
+        }
+        return mapped;
     }
 
 
