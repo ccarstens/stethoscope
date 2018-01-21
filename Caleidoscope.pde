@@ -6,6 +6,8 @@ class Caleidoscope extends SettingsReceiver {
     int y;
     int z;
 
+    PVector pos1;
+
 
     int y3dCurrent = 0;
 
@@ -40,11 +42,11 @@ class Caleidoscope extends SettingsReceiver {
         stroke(this.def.PRIM);
         fill(this.def.PRIM);
 
-        pushMatrix();
-        this.y3d(mouseY);
-        translate(this.x, this.y);
+        pushMatrix();   // translation for image position
+        this.xyz(mouseX - mouseY, mouseY);
+        translate(this.pos1.x, this.pos1.y);
 
-        pushMatrix();
+        pushMatrix(); //rotation and scaling for image size and orientation
 
         rotate(radians(135));
         translate(0, img.height / 2 * -1);
@@ -64,9 +66,14 @@ class Caleidoscope extends SettingsReceiver {
         
     }
 
-    // public int[] xyz(int xValue, int yValue){
+    public void xyz(int xValue, int yValue){
+        PVector coordinate = new PVector(1, 1);
+        PVector xcor = new PVector(xValue, 0);
+        coordinate.mult(yValue);
+        coordinate.add(xcor);
+        this.pos1 = coordinate.copy();
 
-    // }
+    }
 
 
     public void y3d(int yValue){
