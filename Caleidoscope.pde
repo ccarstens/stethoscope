@@ -22,8 +22,8 @@ class Caleidoscope extends SettingsReceiver {
         rotate(radians(-225));
         this.runQuadrant(0);
         this.runQuadrant(1);
-        this.runQuadrant(2);
-        this.runQuadrant(3);
+        // this.runQuadrant(2);
+        // this.runQuadrant(3);
 
 
 
@@ -44,7 +44,7 @@ class Caleidoscope extends SettingsReceiver {
         
 
         int x = mouseX - (width / 2);
-        int y = mouseY - (height / 2);
+        int y = (int) map(mouseY, height / 2, 0, 0, height / 2);
 
         this.xyz(x, y);
         translate(this.pos1.x, this.pos1.y);
