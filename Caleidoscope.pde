@@ -10,6 +10,8 @@ class Caleidoscope extends SettingsReceiver {
 
     int currentQuadrant;
 
+    boolean offBounds;
+
     Caleidoscope(Settings def){
         super(def);
     }
@@ -22,8 +24,8 @@ class Caleidoscope extends SettingsReceiver {
         rotate(radians(-225));
         this.runQuadrant(0);
         this.runQuadrant(1);
-        // this.runQuadrant(2);
-        // this.runQuadrant(3);
+        this.runQuadrant(2);
+        this.runQuadrant(3);
 
 
 
@@ -44,10 +46,13 @@ class Caleidoscope extends SettingsReceiver {
         
 
         int x = mouseX - (width / 2);
-        int y = (int) map(mouseY, height / 2, 0, 0, height / 2);
+        // int y = (int) map(mouseY, height / 2, 0, 0, height / 2);
+        int y = 200;
 
-        this.xyz(x, y);
-        translate(this.pos1.x, this.pos1.y);
+        int z = (int) map(mouseY, height / 2, 0, 0, height / 2);
+
+        this.xyz(x, y, z);
+        translate(this.pos1.x, this.pos1.y, this.pos1.z);
         this.drawImage(img);
         
         popMatrix();
@@ -60,25 +65,55 @@ class Caleidoscope extends SettingsReceiver {
         
     }
 
-    public void xyz(int xValue, int yValue){
-        PVector coordinate = new PVector(1, 1);
+    public void xyz(int xValue, int yValue, int zValue){
+        int x, y, z;
+        this.offBounds = false;
+        y = yValue;
+        if(this.currentQuadrant == 0){
+            x = xValue * -1;
+            z = zValue;
+
+        }else if(this.currentQuadrant == 1){
+            
+            x = zValue;
+            z = xValue;
+            
+        }else if(this.currentQuadrant == 3){
+            x = zValue * -1;
+            z = xValue * -1;
+        }else{
+            x = xValue;
+            
+            z = zValue * -1;
+        }
+        PVector coordinate = new PVector(1, 1, 0);
         coordinate.normalize();
-        PVector xcor = new PVector(-1, 1);
+        PVector xcor = new PVector(1, -1, 0);
         xcor.normalize();
-        coordinate.mult(yValue);
-        xcor.mult(xValue);
+        PVector zcor = new PVector(0, 0, 1);
+        zcor.normalize();
+
+        coordinate.mult(y);
+        xcor.mult(x);
+        zcor.mult(z);
+
         fill(0, 255, 0);
         noStroke();
         ellipse(coordinate.x, coordinate.y, 3, 3);
+
+
         coordinate.add(xcor);
+        coordinate.add(zcor);
+
         fill(0, 0, 255);
         ellipse(coordinate.x, coordinate.y, 7, 7);
+
+
         this.pos1 = coordinate.copy();
 
+
         if(this.pos1.x < 0 || this.pos1.y < 0){
-            println("alert");
-        }else{
-            println("valid");
+            this.offBounds = true;
         }
 
     }
@@ -115,16 +150,19 @@ class Caleidoscope extends SettingsReceiver {
     }
 
     public void drawImage(PImage image){
-        pushMatrix(); //rotation and scaling for image size and orientation
+        if(!this.offBounds){
+            pushMatrix(); //rotation and scaling for image size and orientation
 
-        rotate(radians(135));
-        translate(0, image.height / 2 * -1);
-        imageMode(CENTER);
+            rotate(radians(135));
+            translate(0, image.height / 2 * -1);
+            imageMode(CENTER);
 
-        
-        image(image, 0, 0);
+            
+            image(image, 0, 0);
 
-        popMatrix();
+            popMatrix();
+        }
+
     }
 
 
