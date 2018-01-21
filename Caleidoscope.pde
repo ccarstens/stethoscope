@@ -15,9 +15,7 @@ class Caleidoscope extends SettingsReceiver {
         pushMatrix();
         translate(width/2, height/2);
         rotate(radians(-135));
-        this._draw();
-
-        rotate(radians(90));
+        this.mirror = false;
         this._draw();
 
         rotate(radians(90));
@@ -28,6 +26,10 @@ class Caleidoscope extends SettingsReceiver {
         this.mirror = false;
         this._draw();
 
+        rotate(radians(90));
+        this.mirror = true;
+        this._draw();
+
         popMatrix();
     }
 
@@ -35,10 +37,15 @@ class Caleidoscope extends SettingsReceiver {
     public void _draw(){
         
         this.xy(mouseX, mouseY);
-
+        stroke(this.def.PRIM);
+        fill(this.def.PRIM);
         ellipse(this.x, this.y, 20, 20);
-        line(0, 0, 0, 1000);
-        line(0, 0, 1000, 0);
+
+        if(this.def.SHOWLINES){
+            line(0, 0, 0, 1000);
+            line(0, 0, 1000, 0);    
+        }
+        
     }
 
     public void xy(int xValue, int yValue){
