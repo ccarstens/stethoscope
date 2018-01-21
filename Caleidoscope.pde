@@ -15,7 +15,7 @@ class Caleidoscope extends SettingsReceiver {
         pushMatrix();
         translate(width/2, height/2);
         rotate(radians(-135));
-        this.mirror = false;
+        this.mirror = true;
         this._draw();
 
         rotate(radians(90));
@@ -27,7 +27,7 @@ class Caleidoscope extends SettingsReceiver {
         this._draw();
 
         rotate(radians(90));
-        this.mirror = true;
+        this.mirror = false;
         this._draw();
 
         popMatrix();
