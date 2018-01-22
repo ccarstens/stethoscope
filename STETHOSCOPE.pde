@@ -9,7 +9,7 @@
 Settings def = new Settings(this);
 Caleidoscope cali;
 float radius;
-float theta;
+float phi, theta;
 float x;
 float z;
 
@@ -64,12 +64,12 @@ void draw(){
     // PVector eye = new PVector(500, 500, ((height/2.0) / tan(PI*30.0 / 180.0)));
 
     radius = (height/2.0) / tan(PI*30.0 / 180.0);
-    theta = map(mouseX, 0, width, -180, 180);
-    x = radius * sin(radians(theta));
-    z = radius * cos(radians(theta));
+    phi = map(mouseX, 0, width, -180, 180);
 
 
-    eye = new PVector(x, 0, z);
+
+    eye = sphericalToCartesian(radius, 0, phi);
+    println(eye.x + " " + eye.y + " " + eye.z);
     camera(
      eye.x,     //eye x
      eye.y,    //eye y
@@ -96,27 +96,38 @@ void draw(){
 }
 
 void mousePressed(){
-    println("x: " + x + " \nz: " + z);
+    
 }
 
 
 void drop3DCross(){
     strokeWeight(2);
     int _cross = cross * -1;
+
     stroke(255, 0, 0);
-    line(0, 0, cross, 0, 0, _cross);
+    line(cross, 0, 0, _cross, 0, 0);
+
 
     stroke(0, 255, 0);
     line(0, cross, 0, 0, _cross, 0);
 
     stroke(0, 0, 255);
-    line(cross, 0, 0, _cross, 0, 0);
+    line(0, 0, cross, 0, 0, _cross);
 
     translate(center.x, center.y, center.z);
     fill(255);
     noStroke();
     lights();
     sphere(11);
+}
+
+
+PVector sphericalToCartesian(float radius, float theta, float phi){
+    float x, y, z;
+    x = radius * sin(radians(phi)) * cos(radians(theta));
+    y = radius * sin(radians(phi)) * sin(radians(theta));
+    z = radius * cos(radians(phi));
+    return new PVector(x, y, z);
 }
 
 
