@@ -18,7 +18,7 @@ class Caleidoscope extends SettingsReceiver {
 
 
     public void magic(){
-        background(this.def.BACKGROUND);
+        
         pushMatrix();
         // translate(width/2, height/2);
         // rotate(radians(-225));
