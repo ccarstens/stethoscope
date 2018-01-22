@@ -61,12 +61,12 @@ void draw(){
     // PVector eye = new PVector(500, 500, ((height/2.0) / tan(PI*30.0 / 180.0)));
 
     radius = (height/2.0) / tan(PI*30.0 / 180.0);
-    theta = 0;
+    theta = map(mouseX, 0, width, -180, 180);
     x = radius * sin(radians(theta));
     z = radius * cos(radians(theta));
 
 
-    PVector eye = new PVector(0, 0, (height/2.0) / tan(PI*30.0 / 180.0));
+    PVector eye = new PVector(x, -100, z);
     camera(
      eye.x,     //eye x
      eye.y,    //eye y
