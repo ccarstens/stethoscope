@@ -8,7 +8,12 @@
 
 Settings def = new Settings(this);
 Caleidoscope cali;
+float radius;
+float theta;
+float x;
+float z;
 
+int cross = 1000;
 
 void setup(){
     
@@ -51,16 +56,17 @@ void setup(){
 void draw(){
     background(def.BACKGROUND);
 
-    PVector center = new PVector(width/2.0, height/2.0, 0);
+    PVector center = new PVector(0, 0, 0);
     
     // PVector eye = new PVector(500, 500, ((height/2.0) / tan(PI*30.0 / 180.0)));
 
-    float radius = (height/2.0) / tan(PI*30.0 / 180.0);
-    float theta = 0;
-    float x = radius * sin(radians(theta));
-    float z = radius * cos(radians(theta));
+    radius = (height/2.0) / tan(PI*30.0 / 180.0);
+    theta = 0;
+    x = radius * sin(radians(theta));
+    z = radius * cos(radians(theta));
 
-    PVector eye = new PVector(x, 500, z);
+
+    PVector eye = new PVector(0, 0, (height/2.0) / tan(PI*30.0 / 180.0));
     camera(
      eye.x,     //eye x
      eye.y,    //eye y
@@ -72,10 +78,11 @@ void draw(){
      1,             //up y
      0              //up z
      );
+    drop3DCross();
     // rotateX(radians(map(mouseX, 0, width, -180, 180)));
     pushMatrix();
     translate(0, 0, center.z);
-    ellipse(center.x, center.y, 40, 40);
+    ellipse(center.x, center.y, 2, 2);
     popMatrix();
     // cali.magic();
     
@@ -84,8 +91,21 @@ void draw(){
 }
 
 void mousePressed(){
-    println("eye xy " + map(mouseY, 0, height, -500, height * 2));
-    println(" eye z " + (((height/2.0) / tan(PI*30.0 / 180.0)) - map(mouseX, 0, width, - 500, 2000)));
+    println("x: " + x + " \nz: " + z);
+}
+
+
+void drop3DCross(){
+    strokeWeight(4);
+    int _cross = cross * -1;
+    stroke(255, 0, 0);
+    line(0, 0, cross, 0, 0, _cross);
+
+    stroke(0, 255, 0);
+    line(0, cross, 0, 0, _cross, 0);
+
+    stroke(0, 0, 255);
+    line(cross, 0, 0, _cross, 0, 0);
 }
 
 
