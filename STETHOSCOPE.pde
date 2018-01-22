@@ -15,6 +15,9 @@ float z;
 
 int cross = 1000;
 
+PVector center;
+PVector eye;
+
 void setup(){
     
 
@@ -56,7 +59,7 @@ void setup(){
 void draw(){
     background(def.BACKGROUND);
 
-    PVector center = new PVector(0, 0, 0);
+    center = new PVector(0, 0, 0);
     
     // PVector eye = new PVector(500, 500, ((height/2.0) / tan(PI*30.0 / 180.0)));
 
@@ -66,7 +69,7 @@ void draw(){
     z = radius * cos(radians(theta));
 
 
-    PVector eye = new PVector(x, -100, z);
+    eye = new PVector(x, 0, z);
     camera(
      eye.x,     //eye x
      eye.y,    //eye y
@@ -79,11 +82,13 @@ void draw(){
      0              //up z
      );
     drop3DCross();
-    // rotateX(radians(map(mouseX, 0, width, -180, 180)));
-    pushMatrix();
-    translate(0, 0, center.z);
-    ellipse(center.x, center.y, 2, 2);
-    popMatrix();
+    
+    translate(0, 0, 0);
+    rectMode(CENTER);
+    noFill();
+    stroke(0, 255, 255);
+    rect(0, 0, 1000, 1000);
+
     // cali.magic();
     
     
@@ -96,7 +101,7 @@ void mousePressed(){
 
 
 void drop3DCross(){
-    strokeWeight(4);
+    strokeWeight(2);
     int _cross = cross * -1;
     stroke(255, 0, 0);
     line(0, 0, cross, 0, 0, _cross);
@@ -106,6 +111,12 @@ void drop3DCross(){
 
     stroke(0, 0, 255);
     line(cross, 0, 0, _cross, 0, 0);
+
+    translate(center.x, center.y, center.z);
+    fill(255);
+    noStroke();
+    lights();
+    sphere(11);
 }
 
 
