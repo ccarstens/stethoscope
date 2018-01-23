@@ -81,11 +81,17 @@ void draw(){
     theta = map(mouseX, 0, width, -180, 180);
     phi = map(mouseY, 0, height, -90, 270);
 
-    theta = -21.23999;
-    phi = 109.07999;
-    xRotate = -3.0;
-    yRotate = 0.0;
-    zRotate = 3.0;
+    // theta = -21.23999;
+    // phi = 109.07999;
+    // xRotate = -3.0;
+    // yRotate = 0.0;
+    // zRotate = 3.0;
+
+    theta = 0;
+    phi = 90;
+    // xRotate = 0.0;
+    // yRotate = 0.0;
+    // zRotate = 0.0;
     
     eye = sphericalToCartesian(radius, theta, phi);
     
@@ -100,11 +106,11 @@ void draw(){
      1,             //up y
      0              //up z
      );
-    
-    
-    pushMatrix();
+    // pushMatrix();
+    translate(map(mouseX, 0, width, 1000, -1000), map(mouseY, 0, height, 1000, -1000));
+    // pushMatrix();
     rotateX(radians(xRotate));
-    rotateZ(radians(zRotate));
+    rotate(radians(zRotate));
     rotateY(radians(yRotate));
     
     drop3DCross();
@@ -113,19 +119,20 @@ void draw(){
     noFill();
     stroke(0, 255, 255);
     rect(0, 0, 1000, 1000);
-    popMatrix();
 
-    movers.add(new Mover(def));
+    // popMatrix();
+    // popMatrix();
 
-    Iterator<Mover> it = movers.iterator();
-    while(it.hasNext()){
-        Mover m = it.next();
-        m.run();
-        if(m.isDead()){
-            it.remove();
-        }
-    }
-    
+    // movers.add(new Mover(def));
+
+    // Iterator<Mover> it = movers.iterator();
+    // while(it.hasNext()){
+    //     Mover m = it.next();
+    //     m.run();
+    //     if(m.isDead()){
+    //         it.remove();
+    //     }
+    // }
     
 
 }
@@ -184,8 +191,8 @@ void dropDepthLines(){
     stroke(255, 255, 0);
     strokeWeight(1);
 
-    for(int x = -500; x <= 0; x += step){
-        for(int y = -500; y <= 0; y += step){
+    for(int x = -500; x <= 500; x += step){
+        for(int y = -500; y <= 500; y += step){
             line(x, y, c, x, y, _c);
         }
         
