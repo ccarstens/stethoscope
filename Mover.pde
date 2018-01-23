@@ -22,4 +22,8 @@ class Mover extends SettingsReceiver{
         ellipse(0, 0, 10, 10);
         popMatrix();
     }
+
+    public boolean isDead() {
+        return this.location.z > 400;
+    }
 }

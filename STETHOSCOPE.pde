@@ -14,9 +14,14 @@ float x;
 float z;
 
 int cross = 6000;
-
+int _cross;
 PVector center;
 PVector eye;
+
+ArrayList<Mover> movers;
+Iterator<Mover> it;
+
+int step = 30;
 
 void setup(){
     
@@ -54,6 +59,10 @@ void setup(){
     //  );
     
     zRotate = 0;
+
+    movers = new ArrayList<Mover>();
+    _cross = cross * -1;
+
     
 }
 
@@ -68,11 +77,11 @@ void draw(){
     theta = map(mouseX, 0, width, -180, 180);
     phi = map(mouseY, 0, height, -90, 270);
 
-    zRotate = map(mouseX, 0, width, -180, 180);
+    // zRotate = map(mouseX, 0, width, -180, 180);
     
-    theta = -32.759995;
-    phi = 129.96;
-    zRotate = 12.23999;
+    // theta = -32.759995;
+    // phi = 129.96;
+    // zRotate = 12.23999;
     
     eye = sphericalToCartesian(radius, theta, phi);
     
@@ -89,15 +98,26 @@ void draw(){
      );
     
     
-    translate(0, 0, 0);
+    pushMatrix();
     rotateZ(radians(zRotate));
     drop3DCross();
+    dropDepthLines();
     rectMode(CENTER);
     noFill();
     stroke(0, 255, 255);
     rect(0, 0, 1000, 1000);
+    popMatrix();
 
-    // cali.magic();
+    movers.add(new Mover(def));
+
+    Iterator<Mover> it = movers.iterator();
+    while(it.hasNext()){
+        Mover m = it.next();
+        m.run();
+        if(m.isDead()){
+            it.remove();
+        }
+    }
     
     
 
@@ -107,6 +127,7 @@ void mousePressed(){
     println("theta = " + theta + ";");
     println("phi = " + phi + ";");
     println("zRotate = " + zRotate + ";");
+    println("Movers Count: " + movers.size());
     println("\n");
     
 }
@@ -116,7 +137,7 @@ void drop3DCross(){
     pushMatrix();
     // translate(500, 500, 0);
     strokeWeight(2);
-    int _cross = cross * -1;
+    
 
     stroke(255, 0, 0);
     line(cross, 0, 0, _cross, 0, 0);
@@ -131,7 +152,7 @@ void drop3DCross(){
     translate(0, 0, 0);
     fill(255);
     noStroke();
-    lights();
+    // lights();
     sphere(11);
 
     popMatrix();
@@ -144,6 +165,24 @@ PVector sphericalToCartesian(float radius, float theta, float phi){
     x  = radius * sin(radians(phi)) * sin(radians(theta));
     y  = radius * cos(radians(phi));
     return new PVector(x, y, z);
+}
+
+void dropDepthLines(){
+    int c, _c;
+    c = cross / 9;
+    _c = _cross / 6;
+    pushMatrix();
+    stroke(255, 255, 0);
+    strokeWeight(1);
+
+    for(int x = -500; x <= 0; x += step){
+        for(int y = -500; y <= 0; y += step){
+            line(x, y, c, x, y, _c);
+        }
+        
+
+    }
+    popMatrix();
 }
 
 
