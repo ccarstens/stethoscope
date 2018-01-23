@@ -107,8 +107,10 @@ void draw(){
      0              //up z
      );
     // pushMatrix();
-    translate(map(mouseX, 0, width, 1000, -1000), map(mouseY, 0, height, 1000, -1000));
+    // translate(map(mouseX, 0, width, 1000, -1000), map(mouseY, 0, height, 1000, -1000));
     // pushMatrix();
+    yRotate = map(mouseX, 0, width, 90, -90);
+    xRotate = map(mouseY, 0, height, -90, 90);
     rotateX(radians(xRotate));
     rotate(radians(zRotate));
     rotateY(radians(yRotate));
