@@ -9,9 +9,11 @@
 Settings def = new Settings(this);
 Caleidoscope cali;
 float radius;
-float phi, theta, zRotate;
+float phi, theta;
 float x;
 float z;
+
+float xRotate, yRotate, zRotate;
 
 int cross = 6000;
 int _cross;
@@ -22,6 +24,8 @@ ArrayList<Mover> movers;
 Iterator<Mover> it;
 
 int step = 30;
+
+char activeAxis;
 
 void setup(){
     
@@ -58,7 +62,7 @@ void setup(){
     //  0              //up z
     //  );
     
-    zRotate = 0;
+    xRotate = yRotate = zRotate = 0;
 
     movers = new ArrayList<Mover>();
     _cross = cross * -1;
@@ -77,11 +81,11 @@ void draw(){
     theta = map(mouseX, 0, width, -180, 180);
     phi = map(mouseY, 0, height, -90, 270);
 
-    // zRotate = map(mouseX, 0, width, -180, 180);
-    
-    // theta = -32.759995;
-    // phi = 129.96;
-    // zRotate = 12.23999;
+    theta = -21.23999;
+    phi = 109.07999;
+    xRotate = -3.0;
+    yRotate = 0.0;
+    zRotate = 3.0;
     
     eye = sphericalToCartesian(radius, theta, phi);
     
@@ -99,7 +103,10 @@ void draw(){
     
     
     pushMatrix();
+    rotateX(radians(xRotate));
     rotateZ(radians(zRotate));
+    rotateY(radians(yRotate));
+    
     drop3DCross();
     dropDepthLines();
     rectMode(CENTER);
@@ -126,6 +133,8 @@ void draw(){
 void mousePressed(){
     println("theta = " + theta + ";");
     println("phi = " + phi + ";");
+    println("xRotate = " + xRotate + ";");
+    println("yRotate = " + yRotate + ";");
     println("zRotate = " + zRotate + ";");
     println("Movers Count: " + movers.size());
     println("\n");
@@ -185,5 +194,27 @@ void dropDepthLines(){
     popMatrix();
 }
 
+
+void keyPressed(){
+    println(key + " " + keyCode);
+    if(keyCode != 38 && keyCode != 40 && keyCode != 48){
+        activeAxis = key;
+    }
+
+    if(keyCode == 38){
+        if(activeAxis == 'x') xRotate += 1;
+        if(activeAxis == 'y') yRotate += 1;
+        if(activeAxis == 'z') zRotate += 1;
+    }else if(keyCode == 40){
+        if(activeAxis == 'x') xRotate -= 1;
+        if(activeAxis == 'y') yRotate -= 1;
+        if(activeAxis == 'z') zRotate -= 1;
+    }else if(keyCode == 48){
+        if(activeAxis == 'x') xRotate = 0;
+        if(activeAxis == 'y') yRotate = 0;
+        if(activeAxis == 'z') zRotate = 0;
+        
+    }
+}
 
 
