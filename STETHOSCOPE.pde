@@ -20,13 +20,17 @@ int _cross;
 PVector center;
 PVector eye;
 
+float x2, y2;
+
 ArrayList<Mover> movers;
 Iterator<Mover> it;
 
 int step = 30;
 
-char activeAxis;
+int rotationStep = 15;
 
+char activeAxis;
+float cameraZOffset;
 void setup(){
     
 
@@ -73,10 +77,10 @@ void setup(){
 void draw(){
     background(def.BACKGROUND);
     
-    center = new PVector(0, 0, 0);
+    center = new PVector(width / 2, height / 2, 0);
     
     // PVector eye = new PVector(500, 500, ((height/2.0) / tan(PI*30.0 / 180.0)));
-
+    cameraZOffset = map(mouseX, 0, width, 0, 2000);
     radius = (height/2.0) / tan(PI*30.0 / 180.0) + 121;
     theta = map(mouseX, 0, width, -180, 180);
     phi = map(mouseY, 0, height, -90, 270);
@@ -91,12 +95,13 @@ void draw(){
 
     theta = 0.0;
     phi = 90.0;
-    // xRotate = -14;
+    // xRotate = -18.0;
     // yRotate = 0.0;
-    // zRotate = 0.0;
-    zRotate = -45.0;
-    eye = sphericalToCartesian(radius, theta, phi);
-    
+    // zRotate = -135.0;
+    cameraZOffset = 590.0;
+    // eye = sphericalToCartesian(radius, theta, phi);
+
+    eye = new PVector(width / 2, height / 2, (height/2.0) / tan(PI*30.0 / 180.0) + cameraZOffset);
     camera(
      eye.x,     //eye x
      eye.y,    //eye y
@@ -111,18 +116,21 @@ void draw(){
     // pushMatrix();
     xTrans = map(mouseX, 0, width, 1000, -1000);
     yTrans = map(mouseY, 0, height, 1000, -1000);
-    xTrans = 0.0;
-    yTrans = -702.0;
-    translate(xTrans, yTrans);
+    xTrans = 500.0;
+    yTrans = 500.0;
+    
     // pushMatrix();
-    
+    translate(xTrans, yTrans);
     rotateX(radians(xRotate));
-    rotateZ(radians(zRotate));
     rotateY(radians(yRotate));
-    
+    rotateZ(radians(zRotate));
+
+
+    translate(x2, y2);
+
     drop3DCross();
     dropDepthLines();
-    rectMode(CENTER);
+    // rectMode(CENTER);
     noFill();
     stroke(0, 255, 255);
     rect(0, 0, 1000, 1000);
@@ -152,6 +160,9 @@ void mousePressed(){
     println("zRotate = " + zRotate + ";");
     println("xTrans = " + xTrans + ";");
     println("yTrans = " + yTrans + ";");
+    println("x2 = " + x2 + ";");
+    println("y2 = " + y2 + ";");
+    println("cameraZOffset = " + cameraZOffset + ";");
     println("Movers Count: " + movers.size());
     println("\n");
     
@@ -194,14 +205,14 @@ PVector sphericalToCartesian(float radius, float theta, float phi){
 
 void dropDepthLines(){
     int c, _c;
-    c = cross / 9;
+    c = 0;
     _c = _cross / 6;
     pushMatrix();
     stroke(255, 255, 0);
     strokeWeight(1);
 
-    for(int x = -500; x <= 500; x += step){
-        for(int y = -500; y <= 500; y += step){
+    for(int x = 0; x <= 1000; x += step){
+        for(int y = 0; y <= 1000; y += step){
             line(x, y, c, x, y, _c);
         }
         
@@ -213,24 +224,91 @@ void dropDepthLines(){
 
 void keyPressed(){
     println(key + " " + keyCode);
+    if(key == 'g'){
+        if(rotationStep == 15) rotationStep = 1;
+        else rotationStep = 15;
+    }
     if(keyCode != 38 && keyCode != 40 && keyCode != 48){
         activeAxis = key;
     }
 
+
     if(keyCode == 38){
-        if(activeAxis == 'x') xRotate += 1;
-        if(activeAxis == 'y') yRotate += 1;
-        if(activeAxis == 'z') zRotate += 1;
+        if(activeAxis == 'x') xRotate += rotationStep;
+        if(activeAxis == 'y') yRotate += rotationStep;
+        if(activeAxis == 'z') zRotate += rotationStep;
+        if(activeAxis == 'a') x2 += rotationStep;
+        if(activeAxis == 'b') y2 += rotationStep;
     }else if(keyCode == 40){
-        if(activeAxis == 'x') xRotate -= 1;
-        if(activeAxis == 'y') yRotate -= 1;
-        if(activeAxis == 'z') zRotate -= 1;
+        if(activeAxis == 'x') xRotate -= rotationStep;
+        if(activeAxis == 'y') yRotate -= rotationStep;
+        if(activeAxis == 'z') zRotate -= rotationStep;
+        if(activeAxis == 'a') x2 -= rotationStep;
+        if(activeAxis == 'b') y2 -= rotationStep;
     }else if(keyCode == 48){
         if(activeAxis == 'x') xRotate = 0;
         if(activeAxis == 'y') yRotate = 0;
         if(activeAxis == 'z') zRotate = 0;
+        if(activeAxis == 'a') x2 = 0;
+        if(activeAxis == 'b') y2 = 0;
         
     }
 }
 
+
+
+
+// Quadrant 0
+
+// theta = 0.0;
+// phi = 90.0;
+// xRotate = -18.0;
+// yRotate = 0.0;
+// zRotate = -135.0;
+// xTrans = 500.0;
+// yTrans = 500.0;
+// x2 = 27.0;
+// y2 = 27.0;
+// cameraZOffset = 590.0;
+
+
+
+// Quadrant 1
+// theta = 0.0;
+// phi = 90.0;
+// xRotate = 0.0;
+// yRotate = -18.0;
+// zRotate = -45.0;
+// xTrans = 500.0;
+// yTrans = 500.0;
+// x2 = 27.0;
+// y2 = 27.0;
+// cameraZOffset = 590.0;
+
+
+// Quadrant 2
+// theta = 0.0;
+// phi = 90.0;
+// xRotate = 18.0;
+// yRotate = 0.0;
+// zRotate = 45.0;
+// xTrans = 500.0;
+// yTrans = 500.0;
+// x2 = 27.0;
+// y2 = 27.0;
+// cameraZOffset = 590.0;
+
+
+
+// Quadrant 3
+// theta = 0.0;
+// phi = 90.0;
+// xRotate = 0.0;
+// yRotate = 18.0;
+// zRotate = 135.0;
+// xTrans = 500.0;
+// yTrans = 500.0;
+// x2 = 27.0;
+// y2 = 27.0;
+// cameraZOffset = 590.0;
 
