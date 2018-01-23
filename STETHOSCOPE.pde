@@ -14,7 +14,7 @@ float x;
 float z;
 
 float xRotate, yRotate, zRotate;
-
+float xTrans, yTrans;
 int cross = 6000;
 int _cross;
 PVector center;
@@ -62,7 +62,7 @@ void setup(){
     //  0              //up z
     //  );
     
-    xRotate = yRotate = zRotate = 0;
+    xRotate = yRotate = zRotate = xTrans = yTrans = 0;
 
     movers = new ArrayList<Mover>();
     _cross = cross * -1;
@@ -77,22 +77,24 @@ void draw(){
     
     // PVector eye = new PVector(500, 500, ((height/2.0) / tan(PI*30.0 / 180.0)));
 
-    radius = (height/2.0) / tan(PI*30.0 / 180.0) + 300;
+    radius = (height/2.0) / tan(PI*30.0 / 180.0) + 121;
     theta = map(mouseX, 0, width, -180, 180);
     phi = map(mouseY, 0, height, -90, 270);
 
+    // yRotate = map(mouseX, 0, width, 90, -90);
+    // xRotate = map(mouseY, 0, height, -90, 90);
     // theta = -21.23999;
     // phi = 109.07999;
     // xRotate = -3.0;
     // yRotate = 0.0;
     // zRotate = 3.0;
 
-    theta = 0;
-    phi = 90;
-    // xRotate = 0.0;
+    theta = 0.0;
+    phi = 90.0;
+    // xRotate = -14;
     // yRotate = 0.0;
     // zRotate = 0.0;
-    
+    zRotate = -45.0;
     eye = sphericalToCartesian(radius, theta, phi);
     
     camera(
@@ -107,12 +109,15 @@ void draw(){
      0              //up z
      );
     // pushMatrix();
-    // translate(map(mouseX, 0, width, 1000, -1000), map(mouseY, 0, height, 1000, -1000));
+    xTrans = map(mouseX, 0, width, 1000, -1000);
+    yTrans = map(mouseY, 0, height, 1000, -1000);
+    xTrans = 0.0;
+    yTrans = -702.0;
+    translate(xTrans, yTrans);
     // pushMatrix();
-    yRotate = map(mouseX, 0, width, 90, -90);
-    xRotate = map(mouseY, 0, height, -90, 90);
+    
     rotateX(radians(xRotate));
-    rotate(radians(zRotate));
+    rotateZ(radians(zRotate));
     rotateY(radians(yRotate));
     
     drop3DCross();
@@ -145,6 +150,8 @@ void mousePressed(){
     println("xRotate = " + xRotate + ";");
     println("yRotate = " + yRotate + ";");
     println("zRotate = " + zRotate + ";");
+    println("xTrans = " + xTrans + ";");
+    println("yTrans = " + yTrans + ";");
     println("Movers Count: " + movers.size());
     println("\n");
     
