@@ -32,7 +32,6 @@ char activeAxis;
 float cameraZOffset = 590;
 void setup(){
     
-
     frameRate(def.FRAMERATE);
     // size(1000, 1000, P3D);
     fullScreen(P3D);
@@ -45,12 +44,7 @@ void setup(){
 
     
     _cross = cross * -1;
-
-
-    
-    
-    
-    
+ 
 }
 
 void draw(){
