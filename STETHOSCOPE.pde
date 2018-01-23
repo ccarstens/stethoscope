@@ -9,11 +9,11 @@
 Settings def = new Settings(this);
 Caleidoscope cali;
 float radius;
-float phi, theta;
+float phi, theta, zRotate;
 float x;
 float z;
 
-int cross = 1000;
+int cross = 6000;
 
 PVector center;
 PVector eye;
@@ -53,21 +53,26 @@ void setup(){
     //  0              //up z
     //  );
     
-    theta = 0;
-    phi = 90;
+    zRotate = 0;
+    
 }
 
 void draw(){
     background(def.BACKGROUND);
-    drop3DCross();
+    
     center = new PVector(0, 0, 0);
     
     // PVector eye = new PVector(500, 500, ((height/2.0) / tan(PI*30.0 / 180.0)));
 
     radius = (height/2.0) / tan(PI*30.0 / 180.0) + 300;
-    // theta = map(mouseX, 0, width, -180, 180);
-    // phi = map(mouseY, 0, height, -90, 270);
+    theta = map(mouseX, 0, width, -180, 180);
+    phi = map(mouseY, 0, height, -90, 270);
 
+    zRotate = map(mouseX, 0, width, -180, 180);
+    
+    theta = -32.759995;
+    phi = 129.96;
+    zRotate = 12.23999;
     
     eye = sphericalToCartesian(radius, theta, phi);
     
@@ -85,6 +90,8 @@ void draw(){
     
     
     translate(0, 0, 0);
+    rotateZ(radians(zRotate));
+    drop3DCross();
     rectMode(CENTER);
     noFill();
     stroke(0, 255, 255);
@@ -92,14 +99,14 @@ void draw(){
 
     // cali.magic();
     
-    theta -= 1;
-    phi += 1;
+    
 
 }
 
 void mousePressed(){
-    println("THETA " + theta);
-    println("PHI: " + phi);
+    println("theta = " + theta + ";");
+    println("phi = " + phi + ";");
+    println("zRotate = " + zRotate + ";");
     println("\n");
     
 }
