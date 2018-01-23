@@ -53,23 +53,24 @@ void setup(){
     //  0              //up z
     //  );
     
-    
+    theta = 0;
+    phi = 90;
 }
 
 void draw(){
     background(def.BACKGROUND);
-
+    drop3DCross();
     center = new PVector(0, 0, 0);
     
     // PVector eye = new PVector(500, 500, ((height/2.0) / tan(PI*30.0 / 180.0)));
 
-    radius = (height/2.0) / tan(PI*30.0 / 180.0);
-    phi = map(mouseX, 0, width, -180, 180);
+    radius = (height/2.0) / tan(PI*30.0 / 180.0) + 300;
+    // theta = map(mouseX, 0, width, -180, 180);
+    // phi = map(mouseY, 0, height, -90, 270);
 
-
-
-    eye = sphericalToCartesian(radius, 0, phi);
-    println(eye.x + " " + eye.y + " " + eye.z);
+    
+    eye = sphericalToCartesian(radius, theta, phi);
+    
     camera(
      eye.x,     //eye x
      eye.y,    //eye y
@@ -81,7 +82,7 @@ void draw(){
      1,             //up y
      0              //up z
      );
-    drop3DCross();
+    
     
     translate(0, 0, 0);
     rectMode(CENTER);
@@ -91,16 +92,22 @@ void draw(){
 
     // cali.magic();
     
-    
+    theta -= 1;
+    phi += 1;
 
 }
 
 void mousePressed(){
+    println("THETA " + theta);
+    println("PHI: " + phi);
+    println("\n");
     
 }
 
 
 void drop3DCross(){
+    pushMatrix();
+    // translate(500, 500, 0);
     strokeWeight(2);
     int _cross = cross * -1;
 
@@ -114,19 +121,21 @@ void drop3DCross(){
     stroke(0, 0, 255);
     line(0, 0, cross, 0, 0, _cross);
 
-    translate(center.x, center.y, center.z);
+    translate(0, 0, 0);
     fill(255);
     noStroke();
     lights();
     sphere(11);
+
+    popMatrix();
 }
 
 
 PVector sphericalToCartesian(float radius, float theta, float phi){
     float x, y, z;
-    x = radius * sin(radians(phi)) * cos(radians(theta));
-    y = radius * sin(radians(phi)) * sin(radians(theta));
-    z = radius * cos(radians(phi));
+    z  = radius * sin(radians(phi)) * cos(radians(theta));
+    x  = radius * sin(radians(phi)) * sin(radians(theta));
+    y  = radius * cos(radians(phi));
     return new PVector(x, y, z);
 }
 
