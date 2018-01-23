@@ -22,20 +22,20 @@ PVector eye;
 
 float x2, y2;
 
-ArrayList<Mover> movers;
-Iterator<Mover> it;
+
 
 int step = 30;
 
 int rotationStep = 15;
 
 char activeAxis;
-float cameraZOffset;
+float cameraZOffset = 590;
 void setup(){
     
 
     frameRate(def.FRAMERATE);
-    size(1000, 1000, P3D);
+    // size(1000, 1000, P3D);
+    fullScreen(P3D);
     background(def.BACKGROUND);
     cali = new Caleidoscope(def);
 
@@ -68,40 +68,83 @@ void setup(){
     
     xRotate = yRotate = zRotate = xTrans = yTrans = 0;
 
-    movers = new ArrayList<Mover>();
+    
     _cross = cross * -1;
 
+
+    
+    
+    
     
 }
 
 void draw(){
     background(def.BACKGROUND);
     
-    center = new PVector(width / 2, height / 2, 0);
     
-    // PVector eye = new PVector(500, 500, ((height/2.0) / tan(PI*30.0 / 180.0)));
-    cameraZOffset = map(mouseX, 0, width, 0, 2000);
-    radius = (height/2.0) / tan(PI*30.0 / 180.0) + 121;
-    theta = map(mouseX, 0, width, -180, 180);
-    phi = map(mouseY, 0, height, -90, 270);
+    setCamera(false);
 
-    // yRotate = map(mouseX, 0, width, 90, -90);
-    // xRotate = map(mouseY, 0, height, -90, 90);
-    // theta = -21.23999;
-    // phi = 109.07999;
-    // xRotate = -3.0;
-    // yRotate = 0.0;
-    // zRotate = 3.0;
 
-    theta = 0.0;
-    phi = 90.0;
-    // xRotate = -18.0;
-    // yRotate = 0.0;
-    // zRotate = -135.0;
-    cameraZOffset = 590.0;
-    // eye = sphericalToCartesian(radius, theta, phi);
 
+    translate(width / 2, height / 2);
+
+    
+
+
+    xRotate = -18.0;
+    yRotate = 0.0;
+    zRotate = -135.0;
+    drawTestLines(xRotate, yRotate, zRotate);
+
+    xRotate = 0.0;
+    yRotate = -18.0;
+    zRotate = -45.0;
+    drawTestLines(xRotate, yRotate, zRotate);
+
+    xRotate = 18.0;
+    yRotate = 0.0;
+    zRotate = 45.0;
+    drawTestLines(xRotate, yRotate, zRotate);
+
+    xRotate = 0.0;
+    yRotate = 18.0;
+    zRotate = 135.0;
+    drawTestLines(xRotate, yRotate, zRotate);
+
+    // rotateX(radians(xRotate));
+    // rotateY(radians(yRotate));
+    // rotateZ(radians(zRotate));
+
+
+    // translate(x2, y2);
+
+    // drop3DCross();
+    // dropDepthLines();
+    // // rectMode(CENTER);
+    // noFill();
+    // stroke(0, 255, 255);
+    // rect(0, 0, 1000, 1000);
+    
+
+}
+
+void drawTestLines(float xRotate, float yRotate, float zRotate){
+    pushMatrix();
+    rotateX(radians(xRotate));
+    rotateY(radians(yRotate));
+    rotateZ(radians(zRotate));
+    translate(27, 27);
+
+
+    // drop3DCross();
+    dropDepthLines();
+    popMatrix();
+}
+
+void setCamera(boolean useMouse){
+    if(useMouse) cameraZOffset = map(mouseX, 0, width, -1000, 2000);
     eye = new PVector(width / 2, height / 2, (height/2.0) / tan(PI*30.0 / 180.0) + cameraZOffset);
+    center = new PVector(width / 2, height / 2, 0);
     camera(
      eye.x,     //eye x
      eye.y,    //eye y
@@ -113,44 +156,8 @@ void draw(){
      1,             //up y
      0              //up z
      );
-    // pushMatrix();
-    xTrans = map(mouseX, 0, width, 1000, -1000);
-    yTrans = map(mouseY, 0, height, 1000, -1000);
-    xTrans = 500.0;
-    yTrans = 500.0;
-    
-    // pushMatrix();
-    translate(xTrans, yTrans);
-    rotateX(radians(xRotate));
-    rotateY(radians(yRotate));
-    rotateZ(radians(zRotate));
-
-
-    translate(x2, y2);
-
-    drop3DCross();
-    dropDepthLines();
-    // rectMode(CENTER);
-    noFill();
-    stroke(0, 255, 255);
-    rect(0, 0, 1000, 1000);
-
-    // popMatrix();
-    // popMatrix();
-
-    // movers.add(new Mover(def));
-
-    // Iterator<Mover> it = movers.iterator();
-    // while(it.hasNext()){
-    //     Mover m = it.next();
-    //     m.run();
-    //     if(m.isDead()){
-    //         it.remove();
-    //     }
-    // }
-    
-
 }
+
 
 void mousePressed(){
     println("theta = " + theta + ";");
@@ -163,7 +170,7 @@ void mousePressed(){
     println("x2 = " + x2 + ";");
     println("y2 = " + y2 + ";");
     println("cameraZOffset = " + cameraZOffset + ";");
-    println("Movers Count: " + movers.size());
+
     println("\n");
     
 }
@@ -256,59 +263,4 @@ void keyPressed(){
 }
 
 
-
-
-// Quadrant 0
-
-// theta = 0.0;
-// phi = 90.0;
-// xRotate = -18.0;
-// yRotate = 0.0;
-// zRotate = -135.0;
-// xTrans = 500.0;
-// yTrans = 500.0;
-// x2 = 27.0;
-// y2 = 27.0;
-// cameraZOffset = 590.0;
-
-
-
-// Quadrant 1
-// theta = 0.0;
-// phi = 90.0;
-// xRotate = 0.0;
-// yRotate = -18.0;
-// zRotate = -45.0;
-// xTrans = 500.0;
-// yTrans = 500.0;
-// x2 = 27.0;
-// y2 = 27.0;
-// cameraZOffset = 590.0;
-
-
-// Quadrant 2
-// theta = 0.0;
-// phi = 90.0;
-// xRotate = 18.0;
-// yRotate = 0.0;
-// zRotate = 45.0;
-// xTrans = 500.0;
-// yTrans = 500.0;
-// x2 = 27.0;
-// y2 = 27.0;
-// cameraZOffset = 590.0;
-
-
-
-// Quadrant 3
-// theta = 0.0;
-// phi = 90.0;
-// xRotate = 0.0;
-// yRotate = 18.0;
-// zRotate = 135.0;
-// xTrans = 500.0;
-// yTrans = 500.0;
-// x2 = 27.0;
-// y2 = 27.0;
-// cameraZOffset = 590.0;
 
