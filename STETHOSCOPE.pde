@@ -57,42 +57,7 @@ void draw(){
 
     translate(width / 2, height / 2);
 
-    
-
-
-    xRotate = -18.0;
-    yRotate = 0.0;
-    zRotate = -135.0;
-    drawTestLines(xRotate, yRotate, zRotate);
-
-    xRotate = 0.0;
-    yRotate = -18.0;
-    zRotate = -45.0;
-    drawTestLines(xRotate, yRotate, zRotate);
-
-    xRotate = 18.0;
-    yRotate = 0.0;
-    zRotate = 45.0;
-    drawTestLines(xRotate, yRotate, zRotate);
-
-    xRotate = 0.0;
-    yRotate = 18.0;
-    zRotate = 135.0;
-    drawTestLines(xRotate, yRotate, zRotate);
-
-    // rotateX(radians(xRotate));
-    // rotateY(radians(yRotate));
-    // rotateZ(radians(zRotate));
-
-
-    // translate(x2, y2);
-
-    // drop3DCross();
-    // dropDepthLines();
-    // // rectMode(CENTER);
-    // noFill();
-    // stroke(0, 255, 255);
-    // rect(0, 0, 1000, 1000);
+    cali.magic();
     
 
 }
