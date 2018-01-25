@@ -10,9 +10,11 @@ class Caleidoscope extends SettingsReceiver {
 
     public PVector location;
 
+    public ArrayList<Particle> particles;
+
     public Caleidoscope(Settings def){
         super(def);
-        
+        this.particles = new ArrayList<Particle>();
     }
 
 //765
@@ -31,23 +33,24 @@ class Caleidoscope extends SettingsReceiver {
                     )
         );
 
-        PVector convertedLocation = xyz(location.x, location.y, location.z);
+        
 
         pushMatrix();
 
-
-
-
-
-        
-
-        if(convertedLocation != null){
-            translate(convertedLocation.x, convertedLocation.y, convertedLocation.z);
+        if(this.hologramCoordinateIsInWorldBounds(location)){
+            location = this.hologramToWorld(location);
+            translate(location.x, location.y, location.z);
             ellipse(0, 0, 100, 100);            
         }
 
 
         popMatrix();
+    }
+
+    public void addParticles(){
+        this.particles.add(new Particle(this.def, new PVector(
+            0, 0, 0
+        )));
     }
 
     public PVector toCurrentQuadrant(PVector location){
@@ -69,16 +72,26 @@ class Caleidoscope extends SettingsReceiver {
         return tmp;
     }
 
-    public PVector xyz(float x, float y, float z){
+    public PVector hologramToWorld(PVector hologramCoordinate){
+
+
         PVector coordinate = new PVector(1, 1).normalize();
-        coordinate.mult(y);
+        coordinate.mult(hologramCoordinate.y);
         PVector xVector = new PVector(-1, 1).normalize();
-        xVector.mult(x);
+        xVector.mult(hologramCoordinate.x);
         coordinate.add(xVector);
-        coordinate.z = z;
+        coordinate.z = hologramCoordinate.z;
         
-        if(coordinate.x >= 0 && coordinate.y >= 0) return coordinate;
-        else return null;
+        return coordinate;
+        
+    }
+
+    public boolean hologramCoordinateIsInWorldBounds(PVector hologramCoordinate){
+        return this.isInWorldBounds(this.hologramToWorld(hologramCoordinate));
+    }
+
+    public boolean isInWorldBounds(PVector coordinate){
+        return coordinate.x >= 0 && coordinate.y >= 0;
     }
 
 
