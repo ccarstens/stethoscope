@@ -2,7 +2,7 @@ class Caleidoscope extends SettingsReceiver {
 
     public float x, y, z;
 
-    public float zDepth = -900;
+    public float zDepth = -1500;
 
     public float xWidth = 765;
     
