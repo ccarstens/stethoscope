@@ -9,7 +9,8 @@ class Particle extends SettingsReceiver {
     public Particle(Settings def, PVector _location){
         super(def);
         this.location = _location.copy();
-        this.velocity = this.acceleration = new PVector(0, 0, 0);
+        this.velocity = new PVector(0, 0, 0);
+        this.acceleration = new PVector(0, 0, 0);
         // this.c = color(random(0, 255), random(0, 255), random(0, 255));
         this.c = color(255, 0, 0);
         this.size = 30;

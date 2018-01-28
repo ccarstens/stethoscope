@@ -57,16 +57,13 @@ class Caleidoscope extends SettingsReceiver {
     }
 
     public void addParticles(){
-        if(frameCount % 10 == 0){
-            PVector ve = new PVector(random(this.xWidth * -1, this.xWidth), 0, random(this.zDepth, 0));
-            println(ve);
+        if(frameCount % 100 == 0){            
             Particle p = new Particle(this.def, 
-                ve
+                new PVector(random(this.xWidth * -1, this.xWidth), 0, random(this.zDepth, 0))
             );
 
-            
-            
-            p.velocity = new PVector(0, 3, 0);
+            p.acceleration = new PVector(0, 20, 0);
+
             this.particles.add(p);
         }
 
@@ -76,10 +73,24 @@ class Caleidoscope extends SettingsReceiver {
         Iterator<Particle> it = this.particles.iterator();
         while(it.hasNext()){
             Particle p = it.next();
-            p.velocity = this.globalVelocity;
+            PVector fluidResistance = this.getFluidResistanceForParticle(p);
+            println(fluidResistance);
+            p.applyForce(fluidResistance);
             p.update();
             if(p.location.x > 900) it.remove();
         }
+    }
+
+    public PVector getFluidResistanceForParticle(Particle p) {
+        float c = 0.1;
+        float speed = p.velocity.mag();
+        float resistanceMagnitude = c * speed * speed;
+
+        PVector resistance = p.velocity.copy();
+        resistance.normalize();
+        resistance.mult(-1);
+        resistance.mult(resistanceMagnitude);
+        return resistance;
     }
 
     public PVector toCurrentQuadrant(PVector location){

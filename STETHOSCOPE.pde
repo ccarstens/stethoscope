@@ -51,7 +51,7 @@ void setup(){
 
 void draw(){
 
-    float strength = stethoscope.getAudioMappedTo(0, 3, 1)[0];
+    float strength = stethoscope.getAudioMappedTo(0, 6, 1)[0];
     
 
     background(def.BACKGROUND);
