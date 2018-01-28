@@ -8,13 +8,22 @@ class Caleidoscope extends SettingsReceiver {
     
     int currentQuadrant;
 
-    public PVector location;
+    public PVector location, globalVelocity;
 
     public ArrayList<Particle> particles;
+
+    public boolean play = true;
 
     public Caleidoscope(Settings def){
         super(def);
         this.particles = new ArrayList<Particle>();
+        this.globalVelocity = new PVector(0, 0, 0);
+
+
+    }
+
+    public void togglePlay(){
+        this.play = !this.play;
     }
 
 //765
@@ -25,32 +34,52 @@ class Caleidoscope extends SettingsReceiver {
         
         // println(this.y);
         
-        PVector location = this.toCurrentQuadrant(
-            new PVector(
-                        map(mouseX * 4, 0, width, -765, 765), 
-                        600, 
-                        map(mouseY * 4, 0, height, this.zDepth, 0)
-                    )
-        );
+        // PVector location = this.toCurrentQuadrant(
+        //     new PVector(
+        //                 map(mouseX * 4, 0, width, -765, 765), 
+        //                 600, 
+        //                 map(mouseY * 4, 0, height, this.zDepth, 0)
+        //             )
+        // );
 
-        
+        Iterator<Particle> it = this.particles.iterator();
 
-        pushMatrix();
+        while(it.hasNext()){
+            Particle p = it.next();
+            PVector locationInQuadrant = this.toCurrentQuadrant(p.location);
+            if(this.hologramCoordinateIsInBounds(locationInQuadrant)){
 
-        if(this.hologramCoordinateIsInWorldBounds(location)){
-            location = this.hologramToWorld(location);
-            translate(location.x, location.y, location.z);
-            ellipse(0, 0, 100, 100);            
+                p.displayAt(locationInQuadrant);
+            }
         }
 
 
-        popMatrix();
     }
 
     public void addParticles(){
-        this.particles.add(new Particle(this.def, new PVector(
-            0, 0, 0
-        )));
+        if(frameCount % 10 == 0){
+            PVector ve = new PVector(random(this.xWidth * -1, this.xWidth), 0, random(this.zDepth, 0));
+            println(ve);
+            Particle p = new Particle(this.def, 
+                ve
+            );
+
+            
+            
+            p.velocity = new PVector(0, 3, 0);
+            this.particles.add(p);
+        }
+
+    }
+
+    public void updateParticles(){
+        Iterator<Particle> it = this.particles.iterator();
+        while(it.hasNext()){
+            Particle p = it.next();
+            p.velocity = this.globalVelocity;
+            p.update();
+            if(p.location.x > 900) it.remove();
+        }
     }
 
     public PVector toCurrentQuadrant(PVector location){
@@ -86,17 +115,26 @@ class Caleidoscope extends SettingsReceiver {
         
     }
 
-    public boolean hologramCoordinateIsInWorldBounds(PVector hologramCoordinate){
-        return this.isInWorldBounds(this.hologramToWorld(hologramCoordinate));
+    public boolean hologramCoordinateIsInBounds(PVector hologramCoordinate){
+        return this.isInBounds(this.hologramToWorld(hologramCoordinate));
     }
 
-    public boolean isInWorldBounds(PVector coordinate){
+    public boolean isInBounds(PVector coordinate){
         return coordinate.x >= 0 && coordinate.y >= 0;
     }
 
+    public boolean isInBounds(Particle p){
+        return this.isInBounds(p.location);
+    }
 
 
-    public void magic() {
+
+    public void magic(float strength) {
+        this.globalVelocity.y = strength;
+        if(this.play){
+            this.addParticles();
+            this.updateParticles();
+        }
         for(int i = 0; i < 4; i++){
             this.runQuadrant(i);
         }
@@ -109,8 +147,6 @@ class Caleidoscope extends SettingsReceiver {
         rotateY(radians(yRotate));
         rotateZ(radians(zRotate));
         translate(27, 27);
-
-
         
         this._draw();
 

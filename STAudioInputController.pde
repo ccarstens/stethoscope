@@ -39,11 +39,11 @@ class STAudioInputController extends SettingsReceiver{
         return tmp / bufferPartial.length;
     }
 
-    public float[] getAudioMappedTo(float max, int resolution){
+    public float[] getAudioMappedTo(float min, float max, int resolution){
         float[] sampleAverages = this.getSampleAverages(resolution);
         float[] mapped = new float[sampleAverages.length];
         for(int i = 0; i < sampleAverages.length; i++){
-            mapped[i] = 800 + (sampleAverages[i] * max * -1);
+            mapped[i] = map(sampleAverages[i], 0, 1, min, max);
         }
         return mapped;
     }

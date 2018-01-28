@@ -8,6 +8,7 @@
 
 Settings def = new Settings(this);
 Caleidoscope cali;
+STAudioInputController stethoscope;
 float radius;
 float phi, theta;
 float x;
@@ -37,6 +38,7 @@ void setup(){
     fullScreen(P3D, 1);
     background(def.BACKGROUND);
     cali = new Caleidoscope(def);
+    stethoscope = new STAudioInputController(def);
 
     hint(ENABLE_DEPTH_SORT);
     
@@ -48,6 +50,10 @@ void setup(){
 }
 
 void draw(){
+
+    float strength = stethoscope.getAudioMappedTo(0, 3, 1)[0];
+    
+
     background(def.BACKGROUND);
     
     
@@ -57,7 +63,7 @@ void draw(){
 
     translate(width / 2, height / 2);
 
-    cali.magic();
+    cali.magic(strength);
     
 
 }
@@ -106,6 +112,7 @@ void mousePressed(){
     println("cameraZOffset = " + cameraZOffset + ";");
 
     println("\n");
+    cali.togglePlay();
     
 }
 
@@ -195,6 +202,8 @@ void keyPressed(){
         
     }
 }
+
+
 
 
 
