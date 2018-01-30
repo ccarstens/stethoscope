@@ -35,7 +35,7 @@ void setup(){
     
     frameRate(def.FRAMERATE);
     // size(1000, 1000, P3D);
-    fullScreen(P3D, 1);
+    fullScreen(P3D, 2);
     background(def.BACKGROUND);
     cali = new Caleidoscope(def);
     stethoscope = new STAudioInputController(def);
@@ -46,12 +46,25 @@ void setup(){
 
     
     _cross = cross * -1;
+
+
+    PVector vel = new PVector(0, 0, 0);
+    float c = 0.1;
+    float speed = vel.mag();
+    float resistanceMagnitude = c * speed * speed;
+    
+    PVector resistance = vel.copy();
+    resistance.normalize();
+    resistance.mult(-1);
+    resistance.mult(resistanceMagnitude);
+    println("resistance: "+resistance);
+
  
 }
 
 void draw(){
 
-    float strength = stethoscope.getAudioMappedTo(0, 6, 1)[0];
+    // float strength = stethoscope.getAudioMappedTo(0, 6, 1)[0];
     
 
     background(def.BACKGROUND);
@@ -63,7 +76,7 @@ void draw(){
 
     translate(width / 2, height / 2);
 
-    cali.magic(strength);
+    cali.magic(0);
     
 
 }

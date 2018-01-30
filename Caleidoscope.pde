@@ -30,7 +30,7 @@ class Caleidoscope extends SettingsReceiver {
     public void _draw() {
         fill(255, 0, 0);
         noStroke();
-        // this.dropDepthLines();
+        this.dropDepthLines(); 
         
         // println(this.y);
         
@@ -57,12 +57,12 @@ class Caleidoscope extends SettingsReceiver {
     }
 
     public void addParticles(){
-        if(frameCount % 100 == 0){            
+        if(frameCount % 10 == 0){            
             Particle p = new Particle(this.def, 
                 new PVector(random(this.xWidth * -1, this.xWidth), 0, random(this.zDepth, 0))
             );
 
-            p.acceleration = new PVector(0, 20, 0);
+            p.acceleration = new PVector(0, 0, 0);
 
             this.particles.add(p);
         }
@@ -71,22 +71,49 @@ class Caleidoscope extends SettingsReceiver {
 
     public void updateParticles(){
         Iterator<Particle> it = this.particles.iterator();
+        int i = 0;
         while(it.hasNext()){
             Particle p = it.next();
             PVector fluidResistance = this.getFluidResistanceForParticle(p);
-            println(fluidResistance);
-            p.applyForce(fluidResistance);
+            // println(i);
+            // println("Before Application");
+            // println("p.acceleration: "+p.acceleration);
+            // println("p.velocity: "+p.velocity);
+            // println("fluidResistance: "+fluidResistance);
+            // println("\n");
+            p.applyForce(new PVector(0, 0.1, 0));
+            // if(frameCount > 150) p.applyForce(fluidResistance);
+            // println("After Application");
+            // println("p.acceleration: "+p.acceleration);
+            // println("p.velocity: "+p.velocity);
+            // println("\n");
             p.update();
-            if(p.location.x > 900) it.remove();
+            
+            // println("After Update");
+            // println("p.acceleration: "+p.acceleration);
+            // println("p.velocity: "+p.velocity);
+
+            // println("\n\n\n\n\n");
+            if(p.location.y > 1200) it.remove();
+
+            i++;
+        }
+    } 
+
+    public void setParticleColor(color c) {
+        Iterator<Particle> it = this.particles.iterator();
+        while(it.hasNext()){
+            Particle p = it.next();
+            p.c = c;
         }
     }
 
-    public PVector getFluidResistanceForParticle(Particle p) {
+    public PVector getFluidResistanceForParticle(Particle particle) {
         float c = 0.1;
-        float speed = p.velocity.mag();
+        float speed = particle.velocity.mag();
         float resistanceMagnitude = c * speed * speed;
 
-        PVector resistance = p.velocity.copy();
+        PVector resistance = particle.velocity.copy();
         resistance.normalize();
         resistance.mult(-1);
         resistance.mult(resistanceMagnitude);
@@ -146,6 +173,9 @@ class Caleidoscope extends SettingsReceiver {
             this.addParticles();
             this.updateParticles();
         }
+        noStroke();
+        fill(0, 255, 255);
+        ellipse(0, 0, 30, 30);
         for(int i = 0; i < 4; i++){
             this.runQuadrant(i);
         }
@@ -175,24 +205,28 @@ class Caleidoscope extends SettingsReceiver {
                 xRotate = -18.0;
                 yRotate = 0.0;
                 zRotate = -135.0;
+                this.setParticleColor(color(255, 0, 0));
                 break;
             }
             case 1:{
                 xRotate = 0.0;
                 yRotate = -18.0;
                 zRotate = -45.0;
+                this.setParticleColor(color(0, 255, 0));
                 break;
             }
             case 2:{
                 xRotate = 18.0;
                 yRotate = 0.0;
                 zRotate = 45.0;
+                this.setParticleColor(color(0, 0, 255));
                 break;
             }
             case 3:{
                 xRotate = 0.0;
                 yRotate = 18.0;
                 zRotate = 135.0;
+                this.setParticleColor(color(255, 255, 0));
                 break;
             }
             default:{

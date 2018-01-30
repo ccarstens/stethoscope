@@ -20,6 +20,7 @@ class Particle extends SettingsReceiver {
         // this.applyForce(force);
         this.velocity.add(this.acceleration);
         this.location.add(this.velocity);
+        this.acceleration.mult(0);
     }
 
     public void applyForce(PVector force) {
