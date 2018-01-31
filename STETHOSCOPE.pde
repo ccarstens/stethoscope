@@ -11,7 +11,7 @@ Caleidoscope cali;
 STAudioInputController stethoscope;
 float radius;
 float phi, theta;
-float x;
+float x, y, prev;
 float z;
 
 float xRotate, yRotate, zRotate;
@@ -48,35 +48,42 @@ void setup(){
     _cross = cross * -1;
 
 
-    PVector vel = new PVector(0, 0, 0);
-    float c = 0.1;
-    float speed = vel.mag();
-    float resistanceMagnitude = c * speed * speed;
-    
-    PVector resistance = vel.copy();
-    resistance.normalize();
-    resistance.mult(-1);
-    resistance.mult(resistanceMagnitude);
-    println("resistance: "+resistance);
 
- 
+    x = y = prev = 0;
+
+    stroke(255, 0, 0);
+    line(0, 200, width, 200);
+    line(0, 800, width, 800);
 }
 
 void draw(){
 
-    // float strength = stethoscope.getAudioMappedTo(0, 6, 1)[0];
+    float strength = stethoscope.getAudioMappedTo(0, 1, 1)[0];
     
 
-    background(def.BACKGROUND);
+    // background(def.BACKGROUND);
     
     
-    setCamera(true);
+    // setCamera(true);
 
 
 
-    translate(width / 2, height / 2);
+    // translate(width / 2, height / 2);
 
-    cali.magic(0);
+    // cali.magic(0);
+
+
+    strength = strength * 600 + 200;
+
+    noFill();
+    stroke(255);
+
+    line(x - 1, prev, x, strength);
+
+    prev = strength;
+
+
+    x++;
     
 
 }
