@@ -70,7 +70,7 @@ void draw(){
     background(def.BACKGROUND);
     
     
-    setCamera(false);
+    setCamera(true);
 
 
 

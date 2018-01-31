@@ -4,7 +4,7 @@ class Settings{
 
     public PApplet instance;
 
-    public int BACKGROUND = color(0);
+    public int BACKGROUND = color(255);
     public int DECIMALS = 10;
     public int FRAMERATE = 25;
     public boolean LOG = false;
@@ -20,6 +20,8 @@ class Settings{
     public int STANDARDBUFFERSIZE = 1700;
 
     public boolean SHOWLINES = true;
+
+    public int PARTICLESIZE = 30;
 
     Settings(PApplet instance){
         this.instance = instance;

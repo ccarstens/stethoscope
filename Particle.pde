@@ -13,7 +13,7 @@ class Particle extends SettingsReceiver {
         this.acceleration = new PVector(0, 0, 0);
         // this.c = color(random(0, 255), random(0, 255), random(0, 255));
         this.c = color(255, 0, 0);
-        this.size = 30;
+        this.size = this.def.PARTICLESIZE;
     }
 
     public void update() {

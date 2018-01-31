@@ -14,11 +14,16 @@ class Caleidoscope extends SettingsReceiver {
 
     public boolean play = true;
 
+    PImage overlay;
+
+    public int overlayOffset;
+
     public Caleidoscope(Settings def){
         super(def);
         this.particles = new ArrayList<Particle>();
         this.globalVelocity = new PVector(0, 0, 0);
-
+        this.overlay = loadImage("overlay.png");
+        this.overlayOffset = this.def.PARTICLESIZE / -2;
 
     }
 
@@ -32,6 +37,21 @@ class Caleidoscope extends SettingsReceiver {
         noStroke();
         this.dropDepthLines(); 
         
+        pushMatrix();
+
+
+
+        image(this.overlay, this.overlayOffset, this.overlayOffset);
+        
+        translate(0, 0, this.zDepth / 3);
+        
+        image(this.overlay, this.overlayOffset, this.overlayOffset);
+
+        translate(0, 0, this.zDepth / 1.5);
+        
+        image(this.overlay, this.overlayOffset, this.overlayOffset);
+
+        popMatrix();
         // println(this.y);
         
         // PVector location = this.toCurrentQuadrant(
