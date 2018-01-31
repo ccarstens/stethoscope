@@ -18,6 +18,8 @@ class Caleidoscope extends SettingsReceiver {
 
     public int overlayOffset;
 
+    public boolean pump;
+
     public Caleidoscope(Settings def){
         super(def);
         this.particles = new ArrayList<Particle>();
@@ -35,24 +37,10 @@ class Caleidoscope extends SettingsReceiver {
     public void _draw() {
         fill(255, 0, 0);
         noStroke();
-        this.dropDepthLines(); 
+        // this.dropDepthLines(); 
+        this.dropOverlay();
+
         
-        pushMatrix();
-
-
-
-        image(this.overlay, this.overlayOffset, this.overlayOffset);
-        
-        translate(0, 0, this.zDepth / 3);
-        
-        image(this.overlay, this.overlayOffset, this.overlayOffset);
-
-        translate(0, 0, this.zDepth / 1.5);
-        
-        image(this.overlay, this.overlayOffset, this.overlayOffset);
-
-        popMatrix();
-        // println(this.y);
         
         // PVector location = this.toCurrentQuadrant(
         //     new PVector(
@@ -95,29 +83,22 @@ class Caleidoscope extends SettingsReceiver {
         while(it.hasNext()){
             Particle p = it.next();
             PVector fluidResistance = this.getFluidResistanceForParticle(p);
-            // println(i);
-            // println("Before Application");
-            // println("p.acceleration: "+p.acceleration);
-            // println("p.velocity: "+p.velocity);
-            // println("fluidResistance: "+fluidResistance);
-            // println("\n");
-            p.applyForce(new PVector(0, 0.1, 0));
-            // if(frameCount > 150) p.applyForce(fluidResistance);
-            // println("After Application");
-            // println("p.acceleration: "+p.acceleration);
-            // println("p.velocity: "+p.velocity);
-            // println("\n");
+            p.applyForce(fluidResistance);
+
+            if(this.pump){
+                
+                
+                p.applyForce(new PVector(0, 7, 0));
+            }
+
             p.update();
             
-            // println("After Update");
-            // println("p.acceleration: "+p.acceleration);
-            // println("p.velocity: "+p.velocity);
 
-            // println("\n\n\n\n\n");
             if(p.location.y > 1200) it.remove();
 
             i++;
         }
+        if(this.pump ) this.pump = false;
     } 
 
     public void setParticleColor(color c) {
@@ -278,6 +259,24 @@ class Caleidoscope extends SettingsReceiver {
 
     public boolean isQuadrant(int i){
         return this.currentQuadrant == i;
+    }
+
+    public void dropOverlay(){
+        pushMatrix();
+
+
+
+        image(this.overlay, this.overlayOffset, this.overlayOffset);
+        
+        translate(0, 0, this.zDepth / 3);
+        
+        image(this.overlay, this.overlayOffset - 15, this.overlayOffset - 15);
+
+        translate(0, 0, this.zDepth / 1.5);
+        
+        image(this.overlay, this.overlayOffset - 30, this.overlayOffset - 30);
+
+        popMatrix();
     }
 
 }

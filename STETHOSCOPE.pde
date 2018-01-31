@@ -113,19 +113,21 @@ void setCamera(boolean useMouse){
 
 
 void mousePressed(){
-    println("theta = " + theta + ";");
-    println("phi = " + phi + ";");
-    println("xRotate = " + xRotate + ";");
-    println("yRotate = " + yRotate + ";");
-    println("zRotate = " + zRotate + ";");
-    println("xTrans = " + xTrans + ";");
-    println("yTrans = " + yTrans + ";");
-    println("x2 = " + x2 + ";");
-    println("y2 = " + y2 + ";");
-    println("cameraZOffset = " + cameraZOffset + ";");
+    // println("theta = " + theta + ";");
+    // println("phi = " + phi + ";");
+    // println("xRotate = " + xRotate + ";");
+    // println("yRotate = " + yRotate + ";");
+    // println("zRotate = " + zRotate + ";");
+    // println("xTrans = " + xTrans + ";");
+    // println("yTrans = " + yTrans + ";");
+    // println("x2 = " + x2 + ";");
+    // println("y2 = " + y2 + ";");
+    // println("cameraZOffset = " + cameraZOffset + ";");
 
-    println("\n");
-    cali.togglePlay();
+    // println("\n");
+    // cali.togglePlay();
+
+    cali.pump = true;
     
 }
 
