@@ -23,6 +23,7 @@ PVector eye;
 
 float x2, y2;
 
+float max, min;
 
 
 int step = 30;
@@ -54,33 +55,41 @@ void setup(){
     stroke(255, 0, 0);
     line(0, 200, width, 200);
     line(0, 800, width, 800);
+
+    max = 0;
+    min = 1;
 }
 
 void draw(){
 
-    float strength = stethoscope.getAudioMappedTo(0, 1, 1)[0];
+    float strength = max(stethoscope.getAudioMappedTo(0, 1, 2));
     
+    if(strength < min ) min = strength;
+    if(strength > max) max = strength;
 
-    // background(def.BACKGROUND);
+    background(def.BACKGROUND);
     
     
-    // setCamera(true);
+    setCamera(true);
 
 
 
-    // translate(width / 2, height / 2);
+    translate(width / 2, height / 2);
 
-    // cali.magic(0);
+    cali.magic(0);
 
 
-    strength = strength * 600 + 200;
+    strength = map(strength, min, max, 0, 1);
+    if(strength > 0.2){
+        strength = strength * 600 + 200;
+        noFill();
+        stroke(255);
 
-    noFill();
-    stroke(255);
+        // line(x - 1, prev, x, strength);
+        cali.pump = true;
+        prev = strength;
+    }
 
-    line(x - 1, prev, x, strength);
-
-    prev = strength;
 
 
     x++;
@@ -136,7 +145,12 @@ void mousePressed(){
 
     cali.pump = true;
     
-}
+    println("max: "+max);
+    println("min: "+min);
+    min = 1; 
+    max = 0;
+}   
+
 
 
 void drop3DCross(){
