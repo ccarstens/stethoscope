@@ -20,13 +20,17 @@ class Caleidoscope extends SettingsReceiver {
 
     public boolean pump;
 
+    public int globalTilt = 11;
+    public int _globalTilt;
+
     public Caleidoscope(Settings def){
         super(def);
         this.particles = new ArrayList<Particle>();
         this.globalVelocity = new PVector(0, 0, 0);
         this.overlay = loadImage("overlay.png");
-        this.overlayOffset = this.def.PARTICLESIZE / -2;
-
+        // this.overlayOffset = this.def.PARTICLESIZE / -2;
+        this.overlayOffset = 0;
+        this._globalTilt = this.globalTilt * -1;
     }
 
     public void togglePlay(){
@@ -37,10 +41,10 @@ class Caleidoscope extends SettingsReceiver {
     public void _draw() {
         fill(255, 0, 0);
         noStroke();
-        this.dropDepthLines(); 
-        
+        // this.dropDepthLines(); 
+
         this.dropOverlay();
-        this.dropEdges();
+        // this.dropEdges();
         
         
         // PVector location = this.toCurrentQuadrant(
@@ -175,9 +179,7 @@ class Caleidoscope extends SettingsReceiver {
             this.addParticles();
             this.updateParticles();
         }
-        noStroke();
-        fill(0, 255, 255);
-        ellipse(0, 0, 30, 30);
+        
         for(int i = 0; i < 4; i++){
             this.runQuadrant(i);
         }
@@ -189,7 +191,7 @@ class Caleidoscope extends SettingsReceiver {
         rotateX(radians(xRotate));
         rotateY(radians(yRotate));
         rotateZ(radians(zRotate));
-        translate(27, 27);
+        translate(0, 0);
         
         this._draw();
 
@@ -204,7 +206,7 @@ class Caleidoscope extends SettingsReceiver {
 
         switch(i){
             case 0:{
-                xRotate = -18.0;
+                xRotate = this._globalTilt;
                 yRotate = 0.0;
                 zRotate = -135.0;
                 this.setParticleColor(color(255, 0, 0));
@@ -212,13 +214,13 @@ class Caleidoscope extends SettingsReceiver {
             }
             case 1:{
                 xRotate = 0.0;
-                yRotate = -18.0;
+                yRotate = this._globalTilt;
                 zRotate = -45.0;
                 this.setParticleColor(color(0, 255, 0));
                 break;
             }
             case 2:{
-                xRotate = 18.0;
+                xRotate = this.globalTilt;
                 yRotate = 0.0;
                 zRotate = 45.0;
                 this.setParticleColor(color(0, 0, 255));
@@ -226,7 +228,7 @@ class Caleidoscope extends SettingsReceiver {
             }
             case 3:{
                 xRotate = 0.0;
-                yRotate = 18.0;
+                yRotate = this.globalTilt;
                 zRotate = 135.0;
                 this.setParticleColor(color(255, 255, 0));
                 break;
@@ -265,6 +267,7 @@ class Caleidoscope extends SettingsReceiver {
     public void dropOverlay(){
         pushMatrix();
 
+        translate(0, 0, this.currentQuadrant);
 
 
         image(this.overlay, this.overlayOffset, this.overlayOffset);
@@ -281,9 +284,19 @@ class Caleidoscope extends SettingsReceiver {
     }
 
     public void dropEdges() {
+        pushMatrix();
+        translate(0, 0, 5);
+        noStroke();
+        fill(0, 255, 255);
+        ellipse(0, 0, 30, 30);
+
         stroke(this.def.PRIM);
         line(0, 0, 0, 1000);
         line(0, 0, 1000, 0);
+
+        popMatrix();
+
+
     }
 
 }
