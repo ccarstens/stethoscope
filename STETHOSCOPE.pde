@@ -31,7 +31,8 @@ int step = 30;
 int rotationStep = 15;
 
 char activeAxis;
-float cameraZOffset = 590;
+// float cameraZOffset = 590;
+float cameraZOffset = 0;
 void setup(){
     
     frameRate(def.FRAMERATE);
@@ -70,7 +71,7 @@ void draw(){
     background(def.BACKGROUND);
     
     
-    setCamera(true);
+    setCamera(false);
 
 
 
@@ -147,6 +148,7 @@ void mousePressed(){
     
     println("max: "+max);
     println("min: "+min);
+    println("cameraZOffset: "+cameraZOffset);
     min = 1; 
     max = 0;
 }   

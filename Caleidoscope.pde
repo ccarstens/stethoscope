@@ -37,9 +37,10 @@ class Caleidoscope extends SettingsReceiver {
     public void _draw() {
         fill(255, 0, 0);
         noStroke();
-        // this.dropDepthLines(); 
+        this.dropDepthLines(); 
+        
         this.dropOverlay();
-
+        this.dropEdges();
         
         
         // PVector location = this.toCurrentQuadrant(
@@ -277,6 +278,12 @@ class Caleidoscope extends SettingsReceiver {
         image(this.overlay, this.overlayOffset - 30, this.overlayOffset - 30);
 
         popMatrix();
+    }
+
+    public void dropEdges() {
+        stroke(this.def.PRIM);
+        line(0, 0, 0, 1000);
+        line(0, 0, 1000, 0);
     }
 
 }
