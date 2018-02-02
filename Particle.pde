@@ -5,6 +5,10 @@ class Particle extends SettingsReceiver {
     public color c;
 
     public int size;
+
+    PImage img;
+
+    public boolean triggeredNew = false;
     
     public Particle(Settings def, PVector _location){
         super(def);
@@ -14,6 +18,7 @@ class Particle extends SettingsReceiver {
         // this.c = color(random(0, 255), random(0, 255), random(0, 255));
         this.c = color(255, 0, 0);
         this.size = this.def.PARTICLESIZE;
+        this.img = loadImage("CELL.png");
     }
 
     public void update() {
@@ -35,7 +40,9 @@ class Particle extends SettingsReceiver {
         noStroke();
         pushMatrix();
         translate(loc.x, loc.y, loc.z);
-        ellipse(0, 0, this.size, this.size); 
+        
+        image(this.img, 0, 0);
+
         popMatrix();
     }
 

@@ -4,7 +4,7 @@ class Caleidoscope extends SettingsReceiver {
 
     public float zDepth = -1500;
 
-    public float xWidth = 765;
+    public float xWidth = 200;
     
     int currentQuadrant;
 
@@ -23,6 +23,11 @@ class Caleidoscope extends SettingsReceiver {
     public int globalTilt = 11;
     public int _globalTilt;
 
+    public int triggerNewValue = 300;
+    public int deleteValue = 700;
+
+    public boolean addOne = false;
+
     public Caleidoscope(Settings def){
         super(def);
         this.particles = new ArrayList<Particle>();
@@ -31,6 +36,8 @@ class Caleidoscope extends SettingsReceiver {
         // this.overlayOffset = this.def.PARTICLESIZE / -2;
         this.overlayOffset = 0;
         this._globalTilt = this.globalTilt * -1;
+
+        this.addParticles();
     }
 
     public void togglePlay(){
@@ -70,20 +77,24 @@ class Caleidoscope extends SettingsReceiver {
     }
 
     public void addParticles(){
-        if(frameCount % 10 == 0){            
-            Particle p = new Particle(this.def, 
-                new PVector(random(this.xWidth * -1, this.xWidth), 0, random(this.zDepth, 0))
-            );
+        this.addOne = false;
+                
+        Particle p = new Particle(this.def, 
+            new PVector(random(this.xWidth * -1, this.xWidth), 0, random(this.zDepth, 0))
+        );
 
-            p.acceleration = new PVector(0, 0, 0);
+        p.acceleration = new PVector(0, 0, 0);
 
-            this.particles.add(p);
-        }
+        this.particles.add(p);
+        
 
     }
 
     public void updateParticles(){
-        Iterator<Particle> it = this.particles.iterator();
+
+        if(this.addOne) this.addParticles();
+
+        ListIterator<Particle> it = this.particles.listIterator();
         int i = 0;
         while(it.hasNext()){
             Particle p = it.next();
@@ -98,8 +109,12 @@ class Caleidoscope extends SettingsReceiver {
 
             p.update();
             
+            if(p.location.y > this.triggerNewValue && !p.triggeredNew){
+                p.triggeredNew = true;
+                this.addOne = true;
+            }
 
-            if(p.location.y > 1200) it.remove();
+            if(p.location.y > this.deleteValue) it.remove();
 
             i++;
         }
@@ -176,7 +191,6 @@ class Caleidoscope extends SettingsReceiver {
     public void magic(float strength) {
         this.globalVelocity.y = strength;
         if(this.play){
-            this.addParticles();
             this.updateParticles();
         }
         
