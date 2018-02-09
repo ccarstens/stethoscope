@@ -23,6 +23,8 @@ class Settings{
 
     public int PARTICLESIZE = 30;
 
+    public boolean DEPTHMAPPING = false;
+
     Settings(PApplet instance){
         this.instance = instance;
         this.GLOBALMINIM = new Minim(this.instance);

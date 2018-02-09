@@ -40,7 +40,9 @@ class Particle extends SettingsReceiver {
         noStroke();
         pushMatrix();
         translate(loc.x, loc.y, loc.z);
-        
+        rotate(radians(135));
+        PVector ti = this.hologramToWorld(new PVector(-15, -30, 0));
+        translate(ti.x, ti.y);
         image(this.img, 0, 0);
 
         popMatrix();

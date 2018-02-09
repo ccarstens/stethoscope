@@ -4,7 +4,7 @@ class Caleidoscope extends SettingsReceiver {
 
     public float zDepth = -1500;
 
-    public float xWidth = 200;
+    public float xWidth = 90;
     
     int currentQuadrant;
 
@@ -23,7 +23,7 @@ class Caleidoscope extends SettingsReceiver {
     public int globalTilt = 11;
     public int _globalTilt;
 
-    public int triggerNewValue = 300;
+    public int triggerNewValue = 90;
     public int deleteValue = 700;
 
     public boolean addOne = false;
@@ -50,17 +50,10 @@ class Caleidoscope extends SettingsReceiver {
         noStroke();
         // this.dropDepthLines(); 
 
-        this.dropOverlay();
+        // this.dropOverlay();
         // this.dropEdges();
         
         
-        // PVector location = this.toCurrentQuadrant(
-        //     new PVector(
-        //                 map(mouseX * 4, 0, width, -765, 765), 
-        //                 600, 
-        //                 map(mouseY * 4, 0, height, this.zDepth, 0)
-        //             )
-        // );
 
         Iterator<Particle> it = this.particles.iterator();
 
@@ -145,16 +138,25 @@ class Caleidoscope extends SettingsReceiver {
 
         PVector tmp = location.copy();
 
-        if(this.isQuadrant(1)){
-            tmp.x = map(location.z, 0, this.zDepth, this.xWidth * -1, this.xWidth);
-            tmp.z = map(location.x, this.xWidth * -1, this.xWidth, this.zDepth, 0);
-        }else if(this.isQuadrant(2)){
-            tmp.x *= -1;
-            tmp.z = map(location.z, this.zDepth, 0, 0, this.zDepth);
-        }else if(this.isQuadrant(3)){
-            tmp.x = map(location.z, 0, this.zDepth, this.xWidth, this.xWidth * -1);
-            tmp.z = map(location.x, this.xWidth, this.xWidth * -1, this.zDepth, 0);
+        if(this.def.DEPTHMAPPING){
+            if(this.isQuadrant(1)){
+                tmp.x = map(location.z, 0, this.zDepth, this.xWidth * -1, this.xWidth);
+                tmp.z = map(location.x, this.xWidth * -1, this.xWidth, this.zDepth, 0);
+            }else if(this.isQuadrant(2)){
+                tmp.x *= -1;
+                tmp.z = map(location.z, this.zDepth, 0, 0, this.zDepth);
+            }else if(this.isQuadrant(3)){
+                tmp.x = map(location.z, 0, this.zDepth, this.xWidth, this.xWidth * -1);
+                tmp.z = map(location.x, this.xWidth, this.xWidth * -1, this.zDepth, 0);
+            }
+        }else{
+            if(this.isQuadrant(2) || this.isQuadrant(3)){
+                tmp.x *= -1;
+            }
         }
+
+
+
 
 
         return tmp;
@@ -179,6 +181,9 @@ class Caleidoscope extends SettingsReceiver {
     }
 
     public boolean isInBounds(PVector coordinate){
+        if(coordinate.z < 400){
+            return coordinate.x >= -200 && coordinate.y >= -200;
+        }
         return coordinate.x >= 0 && coordinate.y >= 0;
     }
 

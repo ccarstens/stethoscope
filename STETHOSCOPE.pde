@@ -33,6 +33,9 @@ int rotationStep = 15;
 char activeAxis;
 // float cameraZOffset = 590;
 float cameraZOffset = 0;
+
+PImage crop;
+
 void setup(){
     
     frameRate(def.FRAMERATE);
@@ -53,16 +56,19 @@ void setup(){
 
     x = y = prev = 0;
 
-    stroke(255, 0, 0);
-    line(0, 200, width, 200);
-    line(0, 800, width, 800);
+    // stroke(255, 0, 0);
+    // line(0, 200, width, 200);
+    // line(0, 800, width, 800);
 
     max = 0;
     min = 1;
+
+    crop = loadImage("CROP.png");
 }
 
 void draw(){
 
+    pushMatrix();
     float strength = max(stethoscope.getAudioMappedTo(0, 1, 2));
     
     if(strength < min ) min = strength;
@@ -89,12 +95,18 @@ void draw(){
         // line(x - 1, prev, x, strength);
         cali.pump = true;
         prev = strength;
+        println("strength: "+strength);
     }
 
 
 
     x++;
-    
+
+    popMatrix();
+    pushMatrix();
+    translate(0, 0, 20);
+    image(this.crop, 0, 0);
+    popMatrix();
 
 }
 
